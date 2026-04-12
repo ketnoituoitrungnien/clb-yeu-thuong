@@ -7,23 +7,44 @@
   <style>
     * { box-sizing: border-box; }
 
-    body {
+    :root {
+      --bg: #fff8fa;
+      --card: rgba(255,255,255,0.97);
+      --line: #efd7df;
+      --pink: #c6285a;
+      --pink-dark: #8f1747;
+      --pink-soft: #ffd8e5;
+      --text: #2f2a2c;
+      --muted: #7b7075;
+      --green: #0f9d58;
+      --gold-bg: #fff4dc;
+      --gold-line: #f1d28b;
+      --gold-text: #92400e;
+    }
+
+    html, body {
       margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #fff8fa 0%, #fffdfc 100%);
-      color: #2f2a2c;
+      background: linear-gradient(180deg, var(--bg) 0%, #fffdfc 100%);
+      color: var(--text);
+    }
+
+    body {
+      min-height: 100vh;
     }
 
     header {
       background: rgba(255,255,255,0.98);
-      border-bottom: 1px solid #f0d7df;
+      border-bottom: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 14px 18px;
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 30;
+      gap: 12px;
     }
 
     .brand {
@@ -45,24 +66,23 @@
 
     .brand-text h1 {
       margin: 0;
-      color: #c6285a;
+      color: var(--pink);
       font-size: 24px;
       line-height: 1.15;
     }
 
     .brand-text p {
       margin: 4px 0 0;
-      color: #7a6f73;
+      color: var(--muted);
       font-size: 14px;
       line-height: 1.4;
     }
 
     .header-room {
-      color: #9c1b4d;
+      color: var(--pink-dark);
       font-weight: bold;
       font-size: 15px;
       text-align: right;
-      padding-left: 10px;
       flex-shrink: 0;
     }
 
@@ -84,17 +104,13 @@
       align-items: start;
     }
 
-    .left {
-      min-width: 0;
-    }
-
-    .right {
+    .left, .right {
       min-width: 0;
     }
 
     .card {
-      background: rgba(255,255,255,0.97);
-      border: 1px solid #efd7df;
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: 18px;
       padding: 16px;
       margin-bottom: 16px;
@@ -170,7 +186,7 @@
 
     .chat-card {
       background: rgba(255,255,255,0.98);
-      border: 1px solid #efd7df;
+      border: 1px solid var(--line);
       border-radius: 18px;
       overflow: hidden;
       box-shadow: 0 8px 20px rgba(195, 74, 122, 0.05);
@@ -178,32 +194,53 @@
 
     .chat-top {
       background: linear-gradient(90deg, #fff7fa, #fff1f5);
-      border-bottom: 1px solid #efd7df;
-      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      padding: 16px 18px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       gap: 12px;
     }
 
     .chat-top h2 {
       margin: 0;
       color: #b61f4d;
-      font-size: 30px;
+      font-size: 28px;
       line-height: 1.15;
     }
 
     .chat-top p {
       margin: 6px 0 0;
-      color: #7b7075;
+      color: var(--muted);
       font-size: 14px;
     }
 
+    .chat-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      text-align: right;
+    }
+
     .status {
-      color: #0f9d58;
+      color: var(--green);
       font-weight: bold;
       font-size: 14px;
       white-space: nowrap;
+    }
+
+    .online-count {
+      color: #5a5557;
+      font-size: 13px;
+    }
+
+    .typing-line {
+      min-height: 20px;
+      padding: 8px 18px 0;
+      font-size: 13px;
+      color: var(--pink-dark);
+      font-style: italic;
     }
 
     .messages {
@@ -211,6 +248,7 @@
       height: 420px;
       overflow-y: auto;
       padding: 18px;
+      scroll-behavior: smooth;
     }
 
     .empty {
@@ -253,19 +291,19 @@
 
     .bubble {
       background: #f3f4f6;
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 12px 14px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
       line-height: 1.55;
     }
 
     .msg-row.me .bubble {
-      background: #ffd8e5;
+      background: var(--pink-soft);
     }
 
     .role-cskh .bubble {
-      background: #fff4dc;
-      border: 1px solid #f1d28b;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-line);
     }
 
     .msg-name {
@@ -293,7 +331,7 @@
 
     .badge-cskh {
       background: #fff0c2;
-      color: #92400e;
+      color: var(--gold-text);
     }
 
     .msg-text {
@@ -309,6 +347,7 @@
       border-radius: 12px;
       display: block;
       border: 1px solid #ead7de;
+      cursor: pointer;
     }
 
     .msg-time {
@@ -323,7 +362,7 @@
       align-items: center;
       gap: 10px;
       background: #fff7fa;
-      border: 1px solid #efd7df;
+      border: 1px solid var(--line);
       border-radius: 12px;
       padding: 10px;
     }
@@ -348,7 +387,7 @@
     }
 
     .composer {
-      border-top: 1px solid #efd7df;
+      border-top: 1px solid var(--line);
       background: #fff;
       padding: 14px;
       display: grid;
@@ -408,10 +447,63 @@
       height: 50px;
       border: none;
       border-radius: 12px;
-      background: linear-gradient(135deg, #c6285a, #8f1747);
+      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
       color: white;
       font-weight: bold;
       cursor: pointer;
+    }
+
+    .notice-bar {
+      display: none;
+      position: fixed;
+      right: 14px;
+      top: 82px;
+      z-index: 50;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      min-width: 240px;
+      max-width: 320px;
+    }
+
+    .notice-bar.show {
+      display: block;
+    }
+
+    .notice-title {
+      font-weight: bold;
+      color: var(--pink-dark);
+      margin-bottom: 4px;
+    }
+
+    .notice-text {
+      color: #5f575a;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox.show {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 16px;
+      background: white;
     }
 
     @media (max-width: 980px) {
@@ -448,6 +540,11 @@
         align-items: flex-start;
       }
 
+      .chat-meta {
+        align-items: flex-start;
+        text-align: left;
+      }
+
       .chat-top h2 {
         font-size: 24px;
       }
@@ -471,6 +568,14 @@
 
       .header-room {
         font-size: 13px;
+      }
+
+      .notice-bar {
+        top: auto;
+        bottom: 90px;
+        left: 12px;
+        right: 12px;
+        max-width: unset;
       }
     }
   </style>
@@ -542,8 +647,13 @@
             <h2 id="roomTitle">Phòng riêng tư 2 người</h2>
             <p id="roomText">Room: phong-rieng-01</p>
           </div>
-          <div class="status">Đang kết nối realtime</div>
+          <div class="chat-meta">
+            <div class="status" id="statusLine">Đang kết nối realtime</div>
+            <div class="online-count" id="onlineCount">0 người đang online</div>
+          </div>
         </div>
+
+        <div class="typing-line" id="typingLine"></div>
 
         <div class="messages" id="messages">
           <div class="empty">Chưa có tin nhắn nào. Hãy bắt đầu cuộc trò chuyện.</div>
@@ -568,10 +678,30 @@
     </div>
   </div>
 
+  <div class="notice-bar" id="noticeBar">
+    <div class="notice-title" id="noticeTitle">Tin nhắn mới</div>
+    <div class="notice-text" id="noticeText"></div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <img id="lightboxImg" src="" alt="Ảnh phóng to">
+  </div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy }
-      from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      addDoc,
+      setDoc,
+      onSnapshot,
+      serverTimestamp,
+      query,
+      orderBy,
+      deleteDoc,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBzEsfKawGbZnRStNWK_qUjCMbZ7DJde80",
@@ -595,16 +725,9 @@
     const roomText = document.getElementById("roomText");
     const btnPrivate = document.getElementById("btnPrivate");
     const btnGroup = document.getElementById("btnGroup");
-
-    headerRoom.innerText = "Room: " + roomId;
-    roomText.innerText = "Room: " + roomId;
-    roomTitle.innerText = kind === "group" ? "Phòng chung có CSKH" : "Phòng riêng tư 2 người";
-
-    btnPrivate.href = "?kind=private&room=phong-rieng-01";
-    btnGroup.href = "?kind=group&room=phong-chung-01";
-
-    if (kind === "private") btnPrivate.classList.add("active");
-    if (kind === "group") btnGroup.classList.add("active");
+    const statusLine = document.getElementById("statusLine");
+    const onlineCount = document.getElementById("onlineCount");
+    const typingLine = document.getElementById("typingLine");
 
     const nameInput = document.getElementById("name");
     const msgInput = document.getElementById("msg");
@@ -616,6 +739,13 @@
     const imagePreview = document.getElementById("imagePreview");
     const removeImageBtn = document.getElementById("removeImageBtn");
 
+    const noticeBar = document.getElementById("noticeBar");
+    const noticeTitle = document.getElementById("noticeTitle");
+    const noticeText = document.getElementById("noticeText");
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+
     const savedName = localStorage.getItem("clb_chat_name");
     if (savedName) nameInput.value = savedName;
 
@@ -623,11 +753,75 @@
     myAvatarPreview.src = myAvatar;
 
     let pendingMessageImage = "";
+    let typingTimer = null;
+    let lastMessageCount = 0;
+    let hasLoadedOnce = false;
+    const sessionId = localStorage.getItem("clb_session_id") || ("s_" + Math.random().toString(36).slice(2));
+    localStorage.setItem("clb_session_id", sessionId);
+
+    headerRoom.innerText = "Room: " + roomId;
+    roomText.innerText = "Room: " + roomId;
+    roomTitle.innerText = kind === "group" ? "Phòng chung có CSKH" : "Phòng riêng tư 2 người";
+
+    btnPrivate.href = "?kind=private&room=phong-rieng-01";
+    btnGroup.href = "?kind=group&room=phong-chung-01";
+    if (kind === "private") btnPrivate.classList.add("active");
+    if (kind === "group") btnGroup.classList.add("active");
+
+    function esc(text) {
+      const div = document.createElement("div");
+      div.textContent = text || "";
+      return div.innerHTML;
+    }
+
+    function roleLabel(role) {
+      return role === "cskh" ? "CSKH CLB" : "Hội viên";
+    }
+
+    function roleBadgeClass(role) {
+      return role === "cskh" ? "badge-cskh" : "badge-hoi-vien";
+    }
+
+    function formatTime(ts) {
+      if (!ts) return "Đang gửi...";
+      const d = ts.toDate();
+      return d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function scrollToBottom(force = false) {
+      const nearBottom = messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight < 120;
+      if (force || nearBottom) {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+    }
+
+    function showMiniNotice(title, text) {
+      noticeTitle.textContent = title;
+      noticeText.textContent = text;
+      noticeBar.classList.add("show");
+      clearTimeout(showMiniNotice._timer);
+      showMiniNotice._timer = setTimeout(() => {
+        noticeBar.classList.remove("show");
+      }, 3500);
+    }
+
+    function askNotifyPermission() {
+      if ("Notification" in window && Notification.permission === "default") {
+        Notification.requestPermission();
+      }
+    }
+
+    function sendBrowserNotice(title, body) {
+      if ("Notification" in window && Notification.permission === "granted" && document.hidden) {
+        new Notification(title, { body });
+      } else if (document.hidden) {
+        showMiniNotice(title, body);
+      }
+    }
 
     avatarInput.addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = function () {
         myAvatar = reader.result;
@@ -640,7 +834,6 @@
     messageImageInput.addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = function () {
         pendingMessageImage = reader.result;
@@ -657,45 +850,125 @@
       imagePreviewBox.style.display = "none";
     });
 
-    const messagesRef = collection(db, "rooms", roomId, "messages");
-    const q = query(messagesRef, orderBy("createdAt"));
+    lightbox.addEventListener("click", () => {
+      lightbox.classList.remove("show");
+      lightboxImg.src = "";
+    });
 
-    function formatTime(ts) {
-      if (!ts) return "Đang gửi...";
-      const d = ts.toDate();
-      return d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
+    const roomMessagesRef = collection(db, "rooms", roomId, "messages");
+    const presenceRef = collection(db, "rooms", roomId, "presence");
+    const typingRef = collection(db, "rooms", roomId, "typing");
+    const myPresenceDoc = doc(db, "rooms", roomId, "presence", sessionId);
+    const myTypingDoc = doc(db, "rooms", roomId, "typing", sessionId);
+
+    const messagesQuery = query(roomMessagesRef, orderBy("createdAt"));
+
+    async function updatePresence() {
+      const displayName = nameInput.value.trim() || "Hội viên";
+      await setDoc(myPresenceDoc, {
+        name: displayName,
+        role: roleFromUrl,
+        avatar: myAvatar,
+        lastSeen: Date.now()
+      }, { merge: true });
     }
 
-    function esc(text) {
-      const div = document.createElement("div");
-      div.textContent = text || "";
-      return div.innerHTML;
+    async function setTypingState(isTyping) {
+      const displayName = nameInput.value.trim() || "Hội viên";
+      if (isTyping) {
+        await setDoc(myTypingDoc, {
+          name: displayName,
+          role: roleFromUrl,
+          updatedAt: Date.now()
+        }, { merge: true });
+      } else {
+        try {
+          await deleteDoc(myTypingDoc);
+        } catch (_) {}
+      }
     }
 
-    function roleLabel(role) {
-      if (role === "cskh") return "CSKH CLB";
-      return "Hội viên";
-    }
+    nameInput.addEventListener("change", async () => {
+      localStorage.setItem("clb_chat_name", nameInput.value.trim());
+      await updatePresence();
+    });
 
-    function roleBadgeClass(role) {
-      if (role === "cskh") return "badge-cskh";
-      return "badge-hoi-vien";
-    }
+    msgInput.addEventListener("input", async () => {
+      clearTimeout(typingTimer);
+      await setTypingState(true);
+      typingTimer = setTimeout(() => {
+        setTypingState(false);
+      }, 1500);
+    });
 
-    onSnapshot(q, (snap) => {
+    const heartbeat = setInterval(() => {
+      updatePresence();
+    }, 20000);
+
+    window.addEventListener("beforeunload", () => {
+      clearInterval(heartbeat);
+      setTypingState(false);
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) {
+        updatePresence();
+      }
+    });
+
+    onSnapshot(presenceRef, (snap) => {
+      const now = Date.now();
+      const alive = [];
+      snap.forEach((docSnap) => {
+        const d = docSnap.data();
+        if (d.lastSeen && now - d.lastSeen < 45000) {
+          alive.push(d);
+        }
+      });
+      onlineCount.textContent = `${alive.length} người đang online`;
+      statusLine.textContent = alive.length > 1 ? "Đang online cùng nhau" : "Đang kết nối realtime";
+    });
+
+    onSnapshot(typingRef, (snap) => {
+      const arr = [];
+      const now = Date.now();
+      snap.forEach((docSnap) => {
+        if (docSnap.id === sessionId) return;
+        const d = docSnap.data();
+        if (d.updatedAt && now - d.updatedAt < 3000) {
+          arr.push(d.name || "Ai đó");
+        }
+      });
+
+      if (arr.length === 0) {
+        typingLine.textContent = "";
+      } else if (arr.length === 1) {
+        typingLine.textContent = `${arr[0]} đang nhập...`;
+      } else {
+        typingLine.textContent = "Có người đang nhập...";
+      }
+    });
+
+    onSnapshot(messagesQuery, (snap) => {
       messagesEl.innerHTML = "";
 
       if (snap.empty) {
         messagesEl.innerHTML = '<div class="empty">Chưa có tin nhắn nào. Hãy bắt đầu cuộc trò chuyện.</div>';
+        lastMessageCount = 0;
+        hasLoadedOnce = true;
         return;
       }
 
       const myName = nameInput.value.trim();
+      let newestOtherMessage = null;
+      let count = 0;
 
       snap.forEach((docSnap) => {
         const d = docSnap.data();
+        count += 1;
+
         const row = document.createElement("div");
-        const isMe = d.name === myName;
+        const isMe = d.sessionId === sessionId || (myName && d.name === myName && d.avatar === myAvatar);
         const role = d.role || "hoi-vien";
 
         row.className = "msg-row" + (isMe ? " me" : "") + (role === "cskh" ? " role-cskh" : "");
@@ -716,16 +989,33 @@
         `;
 
         messagesEl.appendChild(row);
+
+        const img = row.querySelector(".msg-image");
+        if (img) {
+          img.addEventListener("click", () => {
+            lightboxImg.src = img.src;
+            lightbox.classList.add("show");
+          });
+        }
+
+        if (!isMe) {
+          newestOtherMessage = d;
+        }
       });
 
-      messagesEl.scrollTop = messagesEl.scrollHeight;
+      if (hasLoadedOnce && count > lastMessageCount && newestOtherMessage) {
+        sendBrowserNotice(
+          newestOtherMessage.name || "Tin nhắn mới",
+          newestOtherMessage.text || "Đã gửi một hình ảnh"
+        );
+      }
+
+      lastMessageCount = count;
+      hasLoadedOnce = true;
+      scrollToBottom();
     }, (error) => {
       console.error("Lỗi đọc tin nhắn:", error);
       messagesEl.innerHTML = '<div class="empty">Không kết nối được dữ liệu. Hãy kiểm tra Firestore Rules.</div>';
-    });
-
-    nameInput.addEventListener("change", () => {
-      localStorage.setItem("clb_chat_name", nameInput.value.trim());
     });
 
     window.send = async () => {
@@ -737,19 +1027,19 @@
         return;
       }
 
-      if (!text && !pendingMessageImage) {
-        return;
-      }
+      if (!text && !pendingMessageImage) return;
 
       localStorage.setItem("clb_chat_name", name);
+      askNotifyPermission();
 
       try {
-        await addDoc(messagesRef, {
+        await addDoc(roomMessagesRef, {
           name,
           role: roleFromUrl,
           text: text || "",
           image: pendingMessageImage || "",
           avatar: myAvatar,
+          sessionId,
           createdAt: serverTimestamp()
         });
 
@@ -759,6 +1049,9 @@
         imagePreview.src = "";
         imagePreviewBox.style.display = "none";
         msgInput.focus();
+        await setTypingState(false);
+        await updatePresence();
+        scrollToBottom(true);
       } catch (error) {
         console.error("Lỗi gửi tin nhắn:", error);
         alert("Không gửi được tin nhắn. Hãy kiểm tra Firestore Rules.");
@@ -771,6 +1064,20 @@
         window.send();
       }
     });
+
+    async function bootstrapCleanup() {
+      await updatePresence();
+      const typingSnap = await getDocs(typingRef);
+      const now = Date.now();
+      typingSnap.forEach(async (docSnap) => {
+        const d = docSnap.data();
+        if (!d.updatedAt || now - d.updatedAt > 10000) {
+          try { await deleteDoc(docSnap.ref); } catch (_) {}
+        }
+      });
+    }
+
+    bootstrapCleanup();
   </script>
 
 </body>
