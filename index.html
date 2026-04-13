@@ -19,6 +19,9 @@
       --gold-bg:#fff4dc;
       --gold-line:#f1d28b;
       --gold-text:#92400e;
+      --blue-bg:#dbeafe;
+      --blue-text:#1d4ed8;
+      --gray:#f3f4f6;
     }
 
     html, body {
@@ -85,7 +88,7 @@
 
     .banner {
       width: 100%;
-      height: 190px;
+      height: 180px;
       object-fit: cover;
       object-position: center;
       display: block;
@@ -95,7 +98,7 @@
 
     .wrap {
       display: grid;
-      grid-template-columns: 310px 1fr;
+      grid-template-columns: 320px 1fr;
       gap: 18px;
       padding: 18px;
       align-items: start;
@@ -157,8 +160,7 @@
       margin-top: 10px;
     }
 
-    .name-editor input,
-    .name-editor select {
+    .name-editor input {
       width: 100%;
       padding: 12px 14px;
       border: 1px solid #dbc8cf;
@@ -167,30 +169,28 @@
       outline: none;
     }
 
-    .room-buttons {
-      display: grid;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .room-btn {
-      display: block;
-      text-decoration: none;
-      text-align: center;
-      padding: 12px;
+    .role-box {
+      margin-top: 12px;
+      padding: 10px 12px;
       border-radius: 12px;
+      font-size: 14px;
       font-weight: bold;
-      border: 1px solid #efc9d7;
-      background: linear-gradient(135deg, #fff2f6, #fff9fb);
-      color: #a61b4f;
-      cursor: pointer;
-      transition: 0.2s ease;
     }
 
-    .room-btn.active {
-      background: linear-gradient(135deg, #d6336c, #8f1747);
-      color: white;
-      border-color: transparent;
+    .role-male {
+      background: var(--blue-bg);
+      color: var(--blue-text);
+    }
+
+    .role-female {
+      background: #ffe4ec;
+      color: #be185d;
+    }
+
+    .role-cskh {
+      background: var(--gold-bg);
+      color: var(--gold-text);
+      border: 1px solid var(--gold-line);
     }
 
     .chat-card {
@@ -299,7 +299,7 @@
     }
 
     .bubble {
-      background: #f3f4f6;
+      background: var(--gray);
       border-radius: 18px;
       padding: 12px 14px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
@@ -310,9 +310,7 @@
       background: var(--pink-soft);
     }
 
-    .role-cskh .bubble,
-    .role-tu-van .bubble,
-    .role-chu-phong .bubble {
+    .support-row .bubble {
       background: var(--gold-bg);
       border: 1px solid var(--gold-line);
     }
@@ -335,16 +333,20 @@
       vertical-align: middle;
     }
 
-    .badge-hoi-vien {
+    .badge-male {
+      background: var(--blue-bg);
+      color: var(--blue-text);
+    }
+
+    .badge-female {
       background: #ffe4ec;
       color: #be185d;
     }
 
-    .badge-cskh,
-    .badge-tu-van,
-    .badge-chu-phong {
-      background: #fff0c2;
+    .badge-cskh {
+      background: var(--gold-bg);
       color: var(--gold-text);
+      border: 1px solid var(--gold-line);
     }
 
     .msg-text {
@@ -412,11 +414,11 @@
       z-index: 5;
     }
 
-    input, textarea, button {
+    textarea, button, input {
       font: inherit;
     }
 
-    input, textarea {
+    textarea, input {
       width: 100%;
       padding: 12px 14px;
       border: 1px solid #dbc8cf;
@@ -456,7 +458,7 @@
       padding: 0 8px;
     }
 
-    .send-btn {
+    .send-btn, .support-btn, .close-btn {
       height: 50px;
       border: none;
       border-radius: 12px;
@@ -464,6 +466,74 @@
       color: white;
       font-weight: bold;
       cursor: pointer;
+      padding: 0 14px;
+    }
+
+    .support-btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .note-green {
+      color: var(--green);
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .support-panel {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 360px;
+      max-width: calc(100vw - 24px);
+      height: 520px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+      overflow: hidden;
+      z-index: 60;
+    }
+
+    .support-panel.show {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .support-head {
+      padding: 14px 16px;
+      background: #fff8ef;
+      border-bottom: 1px solid #f1dfb3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .support-head strong {
+      color: #8f1747;
+      font-size: 16px;
+    }
+
+    .support-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      background: #fffefc;
+      scroll-behavior: smooth;
+    }
+
+    .support-composer {
+      padding: 12px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr 95px;
+      gap: 8px;
+      background: #fff;
+    }
+
+    .hide {
+      display: none !important;
     }
 
     .notice-bar {
@@ -471,13 +541,13 @@
       position: fixed;
       right: 14px;
       top: 82px;
-      z-index: 50;
+      z-index: 80;
       background: white;
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 10px 12px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      min-width: 240px;
+      min-width: 220px;
       max-width: 320px;
     }
 
@@ -495,28 +565,6 @@
       color: #5f575a;
       font-size: 14px;
       line-height: 1.4;
-    }
-
-    .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .lightbox.show {
-      display: flex;
-    }
-
-    .lightbox img {
-      max-width: 100%;
-      max-height: 90vh;
-      border-radius: 16px;
-      background: white;
     }
 
     @media (max-width: 980px) {
@@ -583,6 +631,14 @@
         font-size: 13px;
       }
 
+      .support-panel {
+        right: 8px;
+        left: 8px;
+        bottom: 8px;
+        width: auto;
+        height: 70vh;
+      }
+
       .notice-bar {
         top: auto;
         bottom: 90px;
@@ -597,25 +653,31 @@
 
   <header>
     <div class="brand">
-      <img src="./logo-clb.png" alt="Logo CLB">
+      <img
+        src="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/logo-clb.png"
+        onerror="this.onerror=null;this.src='./logo-clb.png';"
+        alt="Logo CLB"
+      >
       <div class="brand-text">
         <h1>Kết Nối Yêu Thương</h1>
         <p>Tuổi Trung Niên · Chân thành · Uy tín · Bảo mật</p>
       </div>
     </div>
-    <div class="header-room" id="headerRoom">Room: phong-rieng-01</div>
+    <div class="header-room" id="headerRoom">Room: ...</div>
   </header>
 
-  <img src="./banner-clb.png" alt="Banner CLB" class="banner">
+  <img
+    src="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/banner-clb.png"
+    onerror="this.onerror=null;this.src='./banner-clb.png';"
+    alt="Banner CLB"
+    class="banner"
+  >
 
   <div class="wrap">
     <div class="left">
       <div class="card">
         <h3>Giới thiệu CLB</h3>
-        <p>
-          <strong>Kết Nối Yêu Thương – Tuổi Trung Niên</strong> là không gian kết nối dành cho những người mong muốn
-          một mối quan hệ nghiêm túc, bình yên, chân thành và có sự tôn trọng lẫn nhau.
-        </p>
+        <p><strong>Kết Nối Yêu Thương – Tuổi Trung Niên</strong> là không gian kết nối dành cho những người mong muốn một mối quan hệ nghiêm túc, bình yên, chân thành và có sự tôn trọng lẫn nhau.</p>
       </div>
 
       <div class="card">
@@ -633,7 +695,12 @@
         <h3>Hồ sơ người dùng</h3>
 
         <div class="profile-box">
-          <img id="myAvatarPreview" src="./logo-clb.png" alt="Ảnh đại diện">
+          <img
+            id="myAvatarPreview"
+            src="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/logo-clb.png"
+            onerror="this.onerror=null;this.src='./logo-clb.png';"
+            alt="Ảnh đại diện"
+          >
           <div>
             <label for="avatarInput"><strong>Đổi ảnh đại diện</strong></label>
             <div class="small-note">Bấm chọn ảnh từ máy hoặc điện thoại của bạn.</div>
@@ -647,27 +714,10 @@
           <input id="profileName" placeholder="Ví dụ: Ngọc Lan">
         </div>
 
-        <div class="name-editor" id="roleWrap" style="display:none;">
-          <label for="roleSelect"><strong>Vai trò nội bộ CLB</strong></label>
-          <select id="roleSelect">
-            <option value="hoi-vien">Hội viên</option>
-            <option value="chu-phong">Chủ phòng</option>
-            <option value="cskh">CSKH CLB</option>
-            <option value="tu-van">Tư vấn viên</option>
-          </select>
-        </div>
+        <div class="role-box" id="roleBox"></div>
+        <div class="small-note" id="roleNote"></div>
 
-        <div class="small-note">Ảnh và tên sẽ lưu trên thiết bị này cho những lần mở sau.</div>
-      </div>
-
-      <div class="card">
-        <h3>Chọn phòng trò chuyện</h3>
-        <p>Chỉ cần 1 link duy nhất. Vào web rồi bấm chọn phòng.</p>
-        <div class="room-buttons">
-          <a id="btnPrivate" class="room-btn" href="#">Phòng riêng tư 2 người</a>
-          <a id="btnGroup" class="room-btn" href="#">Phòng chung có CSKH</a>
-        </div>
-        <div class="small-note">Người nội bộ CLB có thể mở link quản trị với <strong>?admin=1</strong> để chọn vai trò.</div>
+        <button class="support-btn" id="openSupportBtn">Cần hỗ trợ CSKH</button>
       </div>
     </div>
 
@@ -676,7 +726,7 @@
         <div class="chat-top">
           <div>
             <h2 id="roomTitle">Phòng riêng tư 2 người</h2>
-            <p id="roomText">Room: phong-rieng-01</p>
+            <p id="roomText">Room: ...</p>
           </div>
           <div class="chat-meta">
             <div class="status" id="statusLine">Đang kết nối realtime</div>
@@ -696,25 +746,36 @@
           <button type="button" id="removeImageBtn">Bỏ ảnh</button>
         </div>
 
-        <div class="composer">
+        <div class="composer" id="mainComposer">
           <textarea id="msg" placeholder="Nhập tin nhắn..."></textarea>
           <div class="upload-wrap">
             <span class="upload-label">Gửi hình ảnh</span>
             <input type="file" id="messageImageInput" accept="image/*">
           </div>
-          <button class="send-btn" onclick="send()">Gửi</button>
+          <button class="send-btn" onclick="sendMain()">Gửi</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="support-panel" id="supportPanel">
+    <div class="support-head">
+      <strong id="supportTitle">Phòng hỗ trợ CSKH</strong>
+      <button class="close-btn" id="closeSupportBtn">Đóng</button>
+    </div>
+    <div class="typing-line" id="supportTypingLine"></div>
+    <div class="support-messages" id="supportMessages">
+      <div class="empty">Chưa có tin nhắn hỗ trợ.</div>
+    </div>
+    <div class="support-composer">
+      <textarea id="supportMsg" placeholder="Nhập nội dung cần hỗ trợ..."></textarea>
+      <button class="send-btn" onclick="sendSupport()">Gửi</button>
     </div>
   </div>
 
   <div class="notice-bar" id="noticeBar">
     <div class="notice-title" id="noticeTitle">Tin nhắn mới</div>
     <div class="notice-text" id="noticeText"></div>
-  </div>
-
-  <div class="lightbox" id="lightbox">
-    <img id="lightboxImg" src="" alt="Ảnh phóng to">
   </div>
 
   <script type="module">
@@ -729,8 +790,7 @@
       serverTimestamp,
       query,
       orderBy,
-      deleteDoc,
-      getDocs
+      deleteDoc
     } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -746,22 +806,23 @@
     const db = getFirestore(app);
 
     const params = new URLSearchParams(location.search);
-    const kind = params.get("kind") || "private";
-    const isAdminMode = params.get("admin") === "1";
-    const roomId = params.get("room") || (kind === "group" ? "phong-chung-01" : "phong-rieng-01");
+    const roomId = (params.get("room") || "").trim();
+    const role = (params.get("role") || "").trim().toLowerCase();
+    const supportRoomId = "support_" + roomId;
+
+    if (!roomId || !["male", "female", "cskh"].includes(role)) {
+      document.body.innerHTML = '<div style="padding:24px;font-family:Arial"><h2>Link không hợp lệ</h2><p>Vui lòng kiểm tra lại link mời của CLB.</p></div>';
+      throw new Error("Invalid link");
+    }
 
     const headerRoom = document.getElementById("headerRoom");
     const roomTitle = document.getElementById("roomTitle");
     const roomText = document.getElementById("roomText");
-    const btnPrivate = document.getElementById("btnPrivate");
-    const btnGroup = document.getElementById("btnGroup");
     const statusLine = document.getElementById("statusLine");
     const onlineCount = document.getElementById("onlineCount");
     const typingLine = document.getElementById("typingLine");
 
     const profileName = document.getElementById("profileName");
-    const roleWrap = document.getElementById("roleWrap");
-    const roleSelect = document.getElementById("roleSelect");
     const msgInput = document.getElementById("msg");
     const messagesEl = document.getElementById("messages");
     const avatarInput = document.getElementById("avatarInput");
@@ -770,46 +831,73 @@
     const imagePreviewBox = document.getElementById("imagePreviewBox");
     const imagePreview = document.getElementById("imagePreview");
     const removeImageBtn = document.getElementById("removeImageBtn");
+    const roleBox = document.getElementById("roleBox");
+    const roleNote = document.getElementById("roleNote");
+    const mainComposer = document.getElementById("mainComposer");
+
+    const supportPanel = document.getElementById("supportPanel");
+    const openSupportBtn = document.getElementById("openSupportBtn");
+    const closeSupportBtn = document.getElementById("closeSupportBtn");
+    const supportMessages = document.getElementById("supportMessages");
+    const supportMsg = document.getElementById("supportMsg");
+    const supportTypingLine = document.getElementById("supportTypingLine");
+    const supportTitle = document.getElementById("supportTitle");
 
     const noticeBar = document.getElementById("noticeBar");
     const noticeTitle = document.getElementById("noticeTitle");
     const noticeText = document.getElementById("noticeText");
 
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightboxImg");
+    const storageKeyName = "clb_chat_name_" + roomId + "_" + role;
+    const storageKeyAvatar = "clb_chat_avatar_" + roomId + "_" + role;
+    const storageKeySession = "clb_chat_session_" + roomId + "_" + role;
 
-    let roleFromUrl = localStorage.getItem("clb_chat_role") || "hoi-vien";
-    if (isAdminMode) roleWrap.style.display = "block";
-    else {
-      roleWrap.style.display = "none";
-      roleFromUrl = "hoi-vien";
-    }
-
-    const savedName = localStorage.getItem("clb_chat_name") || "";
+    const savedName = localStorage.getItem(storageKeyName) || "";
     profileName.value = savedName;
 
-    const savedRole = localStorage.getItem("clb_chat_role") || "hoi-vien";
-    roleSelect.value = savedRole;
-    if (isAdminMode) roleFromUrl = savedRole;
-
-    let myAvatar = localStorage.getItem("clb_chat_avatar") || "./logo-clb.png";
+    let myAvatar = localStorage.getItem(storageKeyAvatar) || "./logo-clb.png";
     myAvatarPreview.src = myAvatar;
 
     let pendingMessageImage = "";
     let typingTimer = null;
-    let lastMessageCount = 0;
-    let hasLoadedOnce = false;
-    const sessionId = localStorage.getItem("clb_session_id") || ("s_" + Math.random().toString(36).slice(2));
-    localStorage.setItem("clb_session_id", sessionId);
+    let supportTypingTimer = null;
+    let mainCountLoaded = 0;
+    let supportCountLoaded = 0;
+    let mainLoadedOnce = false;
+    let supportLoadedOnce = false;
+
+    const sessionId = localStorage.getItem(storageKeySession) || ("s_" + Math.random().toString(36).slice(2));
+    localStorage.setItem(storageKeySession, sessionId);
+
+    const isMainUser = role === "male" || role === "female";
+    const isSupportUser = role === "cskh";
 
     headerRoom.innerText = "Room: " + roomId;
-    roomText.innerText = "Room: " + roomId;
-    roomTitle.innerText = kind === "group" ? "Phòng chung có CSKH" : "Phòng riêng tư 2 người";
 
-    btnPrivate.href = "?kind=private&room=phong-rieng-01";
-    btnGroup.href = "?kind=group&room=phong-chung-01";
-    if (kind === "private") btnPrivate.classList.add("active");
-    if (kind === "group") btnGroup.classList.add("active");
+    if (role === "male") {
+      roleBox.className = "role-box role-male";
+      roleBox.textContent = "Vai trò: Bạn nam";
+      roleNote.innerHTML = '<span class="note-green">Phòng này chỉ có 2 hội viên. CSKH không ở trong phòng chính.</span>';
+      roomTitle.innerText = "Phòng riêng tư 2 người";
+      roomText.innerText = "Room: " + roomId;
+    } else if (role === "female") {
+      roleBox.className = "role-box role-female";
+      roleBox.textContent = "Vai trò: Bạn nữ";
+      roleNote.innerHTML = '<span class="note-green">Phòng này chỉ có 2 hội viên. CSKH không ở trong phòng chính.</span>';
+      roomTitle.innerText = "Phòng riêng tư 2 người";
+      roomText.innerText = "Room: " + roomId;
+    } else {
+      roleBox.className = "role-box role-cskh";
+      roleBox.textContent = "Vai trò: CSKH CLB";
+      roleNote.innerHTML = '<span class="note-green">Bạn đang ở khu hỗ trợ riêng. Bạn không tham gia phòng chính của cặp đôi.</span>';
+      roomTitle.innerText = "Khu hỗ trợ CSKH";
+      roomText.innerText = "Room hỗ trợ: " + supportRoomId;
+      statusLine.innerText = "Đang trực hỗ trợ";
+      openSupportBtn.classList.add("hide");
+      supportPanel.classList.add("show");
+      supportTitle.innerText = "Phòng hỗ trợ hội viên";
+      mainComposer.classList.add("hide");
+      messagesEl.innerHTML = '<div class="empty">CSKH không đọc phòng riêng của nam và nữ.</div>';
+    }
 
     function esc(text) {
       const div = document.createElement("div");
@@ -817,25 +905,18 @@
       return div.innerHTML;
     }
 
-    function roleLabel(role) {
-      if (role === "cskh") return "CSKH CLB";
-      if (role === "tu-van") return "Tư vấn viên";
-      if (role === "chu-phong") return "Chủ phòng";
-      return "Hội viên";
+    function roleLabel(r) {
+      if (r === "male") return "Bạn nam";
+      if (r === "female") return "Bạn nữ";
+      if (r === "cskh") return "CSKH CLB";
+      return "Người dùng";
     }
 
-    function roleBadgeClass(role) {
-      if (role === "cskh") return "badge-cskh";
-      if (role === "tu-van") return "badge-tu-van";
-      if (role === "chu-phong") return "badge-chu-phong";
-      return "badge-hoi-vien";
-    }
-
-    function roleRowClass(role) {
-      if (role === "cskh") return " role-cskh";
-      if (role === "tu-van") return " role-tu-van";
-      if (role === "chu-phong") return " role-chu-phong";
-      return "";
+    function roleBadgeClass(r) {
+      if (r === "male") return "badge-male";
+      if (r === "female") return "badge-female";
+      if (r === "cskh") return "badge-cskh";
+      return "badge-female";
     }
 
     function formatTime(ts) {
@@ -844,19 +925,17 @@
       return d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
     }
 
-    function scrollToBottom(force = false) {
-      const nearBottom = messagesEl.scrollHeight - messagesEl.scrollTop - messagesEl.clientHeight < 120;
-      if (force || nearBottom) messagesEl.scrollTop = messagesEl.scrollHeight;
+    function scrollBottom(el, force = false) {
+      const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 120;
+      if (force || nearBottom) el.scrollTop = el.scrollHeight;
     }
 
-    function showMiniNotice(title, text) {
+    function showNotice(title, text) {
       noticeTitle.textContent = title;
       noticeText.textContent = text;
       noticeBar.classList.add("show");
-      clearTimeout(showMiniNotice._timer);
-      showMiniNotice._timer = setTimeout(() => {
-        noticeBar.classList.remove("show");
-      }, 3500);
+      clearTimeout(showNotice._timer);
+      showNotice._timer = setTimeout(() => noticeBar.classList.remove("show"), 3500);
     }
 
     function askNotifyPermission() {
@@ -869,7 +948,7 @@
       if ("Notification" in window && Notification.permission === "granted" && document.hidden) {
         new Notification(title, { body });
       } else if (document.hidden) {
-        showMiniNotice(title, body);
+        showNotice(title, body);
       }
     }
 
@@ -879,11 +958,16 @@
       const reader = new FileReader();
       reader.onload = function () {
         myAvatar = reader.result;
-        localStorage.setItem("clb_chat_avatar", myAvatar);
+        localStorage.setItem(storageKeyAvatar, myAvatar);
         myAvatarPreview.src = myAvatar;
         updatePresence();
       };
       reader.readAsDataURL(file);
+    });
+
+    profileName.addEventListener("change", async () => {
+      localStorage.setItem(storageKeyName, profileName.value.trim());
+      await updatePresence();
     });
 
     messageImageInput.addEventListener("change", (e) => {
@@ -905,94 +989,161 @@
       imagePreviewBox.style.display = "none";
     });
 
-    lightbox.addEventListener("click", () => {
-      lightbox.classList.remove("show");
-      lightboxImg.src = "";
+    openSupportBtn.addEventListener("click", () => {
+      supportPanel.classList.add("show");
+      supportMsg.focus();
     });
 
-    const roomMessagesRef = collection(db, "rooms", roomId, "messages");
-    const presenceRef = collection(db, "rooms", roomId, "presence");
-    const typingRef = collection(db, "rooms", roomId, "typing");
-    const myPresenceDoc = doc(db, "rooms", roomId, "presence", sessionId);
-    const myTypingDoc = doc(db, "rooms", roomId, "typing", sessionId);
-    const messagesQuery = query(roomMessagesRef, orderBy("createdAt"));
+    closeSupportBtn.addEventListener("click", () => {
+      supportPanel.classList.remove("show");
+    });
+
+    const mainMessagesRef = collection(db, "rooms", roomId, "messages");
+    const mainPresenceRef = collection(db, "rooms", roomId, "presence");
+    const mainTypingRef = collection(db, "rooms", roomId, "typing");
+    const myMainPresenceDoc = doc(db, "rooms", roomId, "presence", sessionId);
+    const myMainTypingDoc = doc(db, "rooms", roomId, "typing", sessionId);
+
+    const supportMessagesRef = collection(db, "rooms", supportRoomId, "messages");
+    const supportPresenceRef = collection(db, "rooms", supportRoomId, "presence");
+    const supportTypingRef = collection(db, "rooms", supportRoomId, "typing");
+    const mySupportPresenceDoc = doc(db, "rooms", supportRoomId, "presence", sessionId);
+    const mySupportTypingDoc = doc(db, "rooms", supportRoomId, "typing", sessionId);
+
+    const mainQuery = query(mainMessagesRef, orderBy("createdAt"));
+    const supportQuery = query(supportMessagesRef, orderBy("createdAt"));
 
     async function updatePresence() {
-      const displayName = profileName.value.trim() || "Hội viên";
+      const displayName = profileName.value.trim() || roleLabel(role);
       try {
-        await setDoc(myPresenceDoc, {
+        if (isMainUser) {
+          await setDoc(myMainPresenceDoc, {
+            name: displayName,
+            role,
+            avatar: myAvatar,
+            lastSeen: Date.now()
+          }, { merge: true });
+        }
+
+        await setDoc(mySupportPresenceDoc, {
           name: displayName,
-          role: roleFromUrl,
+          role,
           avatar: myAvatar,
           lastSeen: Date.now()
         }, { merge: true });
       } catch (e) {
-        console.error("Lỗi update presence:", e);
+        console.error("Presence error", e);
       }
     }
 
-    async function setTypingState(isTyping) {
-      const displayName = profileName.value.trim() || "Hội viên";
+    async function setTypingState(isTyping, supportMode = false) {
+      const displayName = profileName.value.trim() || roleLabel(role);
+      const targetDoc = supportMode ? mySupportTypingDoc : myMainTypingDoc;
+
       try {
         if (isTyping) {
-          await setDoc(myTypingDoc, {
+          await setDoc(targetDoc, {
             name: displayName,
-            role: roleFromUrl,
+            role,
             updatedAt: Date.now()
           }, { merge: true });
         } else {
-          await deleteDoc(myTypingDoc);
+          await deleteDoc(targetDoc);
         }
       } catch (_) {}
     }
 
-    profileName.addEventListener("change", async () => {
-      const v = profileName.value.trim();
-      localStorage.setItem("clb_chat_name", v);
-      await updatePresence();
-    });
+    if (isMainUser) {
+      msgInput.addEventListener("input", async () => {
+        clearTimeout(typingTimer);
+        await setTypingState(true, false);
+        typingTimer = setTimeout(() => setTypingState(false, false), 1500);
+      });
 
-    if (roleSelect) {
-      roleSelect.addEventListener("change", async () => {
-        localStorage.setItem("clb_chat_role", roleSelect.value);
-        roleFromUrl = roleSelect.value;
-        await updatePresence();
+      onSnapshot(mainPresenceRef, (snap) => {
+        const now = Date.now();
+        const alive = [];
+        snap.forEach((docSnap) => {
+          const d = docSnap.data();
+          if (d.lastSeen && now - d.lastSeen < 45000) alive.push(d);
+        });
+        onlineCount.textContent = `${alive.length} người đang online`;
+        statusLine.textContent = alive.length > 1 ? "Đang online cùng nhau" : "Đang kết nối realtime";
+      });
+
+      onSnapshot(mainTypingRef, (snap) => {
+        const arr = [];
+        const now = Date.now();
+        snap.forEach((docSnap) => {
+          if (docSnap.id === sessionId) return;
+          const d = docSnap.data();
+          if (d.updatedAt && now - d.updatedAt < 3000) arr.push(d.name || "Người kia");
+        });
+        typingLine.textContent = arr.length ? `${arr[0]} đang nhập...` : "";
+      });
+
+      onSnapshot(mainQuery, (snap) => {
+        messagesEl.innerHTML = "";
+
+        if (snap.empty) {
+          messagesEl.innerHTML = '<div class="empty">Chưa có tin nhắn nào. Hãy bắt đầu cuộc trò chuyện.</div>';
+          mainCountLoaded = 0;
+          mainLoadedOnce = true;
+          return;
+        }
+
+        const myName = profileName.value.trim();
+        let newestOther = null;
+        let count = 0;
+
+        snap.forEach((docSnap) => {
+          const d = docSnap.data();
+          if (d.role === "cskh") return;
+          count += 1;
+
+          const row = document.createElement("div");
+          const isMe = d.sessionId === sessionId || (myName && d.name === myName && d.avatar === myAvatar);
+          row.className = "msg-row" + (isMe ? " me" : "");
+
+          row.innerHTML = `
+            <div class="msg-inner">
+              <img class="msg-avatar" src="${esc(d.avatar || "./logo-clb.png")}" alt="avatar">
+              <div class="bubble">
+                <div class="msg-name">
+                  ${esc(d.name || "Ẩn danh")}
+                  <span class="badge ${roleBadgeClass(d.role || "female")}">${roleLabel(d.role || "female")}</span>
+                </div>
+                <div class="msg-text">${esc(d.text || "")}</div>
+                ${d.image ? `<img class="msg-image" src="${esc(d.image)}" alt="Ảnh gửi lên">` : ""}
+                <div class="msg-time">${formatTime(d.createdAt)}</div>
+              </div>
+            </div>
+          `;
+
+          messagesEl.appendChild(row);
+
+          if (!isMe) newestOther = d;
+        });
+
+        if (mainLoadedOnce && count > mainCountLoaded && newestOther) {
+          sendBrowserNotice(newestOther.name || "Tin nhắn mới", newestOther.text || "Đã gửi một hình ảnh");
+        }
+
+        mainCountLoaded = count;
+        mainLoadedOnce = true;
+        scrollBottom(messagesEl);
       });
     }
 
-    msgInput.addEventListener("input", async () => {
-      clearTimeout(typingTimer);
-      await setTypingState(true);
-      typingTimer = setTimeout(() => {
-        setTypingState(false);
-      }, 1500);
+    supportMsg.addEventListener("input", async () => {
+      clearTimeout(supportTypingTimer);
+      await setTypingState(true, true);
+      supportTypingTimer = setTimeout(() => setTypingState(false, true), 1500);
     });
 
-    const heartbeat = setInterval(() => {
-      updatePresence();
-    }, 20000);
+    onSnapshot(supportPresenceRef, () => {});
 
-    window.addEventListener("beforeunload", () => {
-      clearInterval(heartbeat);
-      setTypingState(false);
-    });
-
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) updatePresence();
-    });
-
-    onSnapshot(presenceRef, (snap) => {
-      const now = Date.now();
-      const alive = [];
-      snap.forEach((docSnap) => {
-        const d = docSnap.data();
-        if (d.lastSeen && now - d.lastSeen < 45000) alive.push(d);
-      });
-      onlineCount.textContent = `${alive.length} người đang online`;
-      statusLine.textContent = alive.length > 1 ? "Đang online cùng nhau" : "Đang kết nối realtime";
-    });
-
-    onSnapshot(typingRef, (snap) => {
+    onSnapshot(supportTypingRef, (snap) => {
       const arr = [];
       const now = Date.now();
       snap.forEach((docSnap) => {
@@ -1000,24 +1151,21 @@
         const d = docSnap.data();
         if (d.updatedAt && now - d.updatedAt < 3000) arr.push(d.name || "Ai đó");
       });
-
-      if (arr.length === 0) typingLine.textContent = "";
-      else if (arr.length === 1) typingLine.textContent = `${arr[0]} đang nhập...`;
-      else typingLine.textContent = "Có người đang nhập...";
+      supportTypingLine.textContent = arr.length ? `${arr[0]} đang nhập...` : "";
     });
 
-    onSnapshot(messagesQuery, (snap) => {
-      messagesEl.innerHTML = "";
+    onSnapshot(supportQuery, (snap) => {
+      supportMessages.innerHTML = "";
 
       if (snap.empty) {
-        messagesEl.innerHTML = '<div class="empty">Chưa có tin nhắn nào. Hãy bắt đầu cuộc trò chuyện.</div>';
-        lastMessageCount = 0;
-        hasLoadedOnce = true;
+        supportMessages.innerHTML = '<div class="empty">Chưa có tin nhắn hỗ trợ.</div>';
+        supportCountLoaded = 0;
+        supportLoadedOnce = true;
         return;
       }
 
       const myName = profileName.value.trim();
-      let newestOtherMessage = null;
+      let newestOther = null;
       let count = 0;
 
       snap.forEach((docSnap) => {
@@ -1026,9 +1174,7 @@
 
         const row = document.createElement("div");
         const isMe = d.sessionId === sessionId || (myName && d.name === myName && d.avatar === myAvatar);
-        const role = d.role || "hoi-vien";
-
-        row.className = "msg-row" + (isMe ? " me" : "") + roleRowClass(role);
+        row.className = "msg-row" + (isMe ? " me" : "") + " support-row";
 
         row.innerHTML = `
           <div class="msg-inner">
@@ -1036,46 +1182,33 @@
             <div class="bubble">
               <div class="msg-name">
                 ${esc(d.name || "Ẩn danh")}
-                <span class="badge ${roleBadgeClass(role)}">${roleLabel(role)}</span>
+                <span class="badge ${roleBadgeClass(d.role || "cskh")}">${roleLabel(d.role || "cskh")}</span>
               </div>
               <div class="msg-text">${esc(d.text || "")}</div>
-              ${d.image ? `<img class="msg-image" src="${esc(d.image)}" alt="Ảnh gửi lên">` : ""}
               <div class="msg-time">${formatTime(d.createdAt)}</div>
             </div>
           </div>
         `;
 
-        messagesEl.appendChild(row);
+        supportMessages.appendChild(row);
 
-        const img = row.querySelector(".msg-image");
-        if (img) {
-          img.addEventListener("click", () => {
-            lightboxImg.src = img.src;
-            lightbox.classList.add("show");
-          });
-        }
-
-        if (!isMe) newestOtherMessage = d;
+        if (!isMe) newestOther = d;
       });
 
-      if (hasLoadedOnce && count > lastMessageCount && newestOtherMessage) {
-        sendBrowserNotice(
-          newestOtherMessage.name || "Tin nhắn mới",
-          newestOtherMessage.text || "Đã gửi một hình ảnh"
-        );
+      if (supportLoadedOnce && count > supportCountLoaded && newestOther) {
+        sendBrowserNotice(newestOther.name || "Tin nhắn hỗ trợ", newestOther.text || "Có tin nhắn mới");
       }
 
-      lastMessageCount = count;
-      hasLoadedOnce = true;
-      scrollToBottom();
-    }, (error) => {
-      console.error("Lỗi đọc tin nhắn:", error);
-      messagesEl.innerHTML = '<div class="empty">Không kết nối được dữ liệu. Hãy kiểm tra Firestore Rules.</div>';
+      supportCountLoaded = count;
+      supportLoadedOnce = true;
+      scrollBottom(supportMessages);
     });
 
-    window.send = async () => {
+    window.sendMain = async () => {
       const name = profileName.value.trim();
       const text = msgInput.value.trim();
+
+      if (!isMainUser) return;
 
       if (!name) {
         alert("Vui lòng nhập tên hiển thị ở phần hồ sơ người dùng");
@@ -1084,56 +1217,79 @@
 
       if (!text && !pendingMessageImage) return;
 
-      localStorage.setItem("clb_chat_name", name);
+      localStorage.setItem(storageKeyName, name);
       askNotifyPermission();
 
-      try {
-        await addDoc(roomMessagesRef, {
-          name,
-          role: roleFromUrl,
-          text: text || "",
-          image: pendingMessageImage || "",
-          avatar: myAvatar,
-          sessionId,
-          createdAt: serverTimestamp()
-        });
+      await addDoc(mainMessagesRef, {
+        name,
+        role,
+        text: text || "",
+        image: pendingMessageImage || "",
+        avatar: myAvatar,
+        sessionId,
+        createdAt: serverTimestamp()
+      });
 
-        msgInput.value = "";
-        pendingMessageImage = "";
-        messageImageInput.value = "";
-        imagePreview.src = "";
-        imagePreviewBox.style.display = "none";
-        msgInput.focus();
-        await setTypingState(false);
-        await updatePresence();
-        scrollToBottom(true);
-      } catch (error) {
-        console.error("Lỗi gửi tin nhắn:", error);
-        alert("Không gửi được tin nhắn. Hãy kiểm tra Firestore Rules.");
+      msgInput.value = "";
+      pendingMessageImage = "";
+      messageImageInput.value = "";
+      imagePreview.src = "";
+      imagePreviewBox.style.display = "none";
+      await setTypingState(false, false);
+      await updatePresence();
+      scrollBottom(messagesEl, true);
+    };
+
+    window.sendSupport = async () => {
+      const name = profileName.value.trim();
+      const text = supportMsg.value.trim();
+
+      if (!name) {
+        alert("Vui lòng nhập tên hiển thị ở phần hồ sơ người dùng");
+        return;
       }
+
+      if (!text) return;
+
+      localStorage.setItem(storageKeyName, name);
+
+      await addDoc(supportMessagesRef, {
+        name,
+        role,
+        text,
+        avatar: myAvatar,
+        sessionId,
+        createdAt: serverTimestamp()
+      });
+
+      supportMsg.value = "";
+      await setTypingState(false, true);
+      await updatePresence();
+      scrollBottom(supportMessages, true);
     };
 
     msgInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
-        window.send();
+        window.sendMain();
       }
     });
 
-    async function bootstrapCleanup() {
-      await updatePresence();
-      const typingSnap = await getDocs(typingRef);
-      const now = Date.now();
-      typingSnap.forEach(async (docSnap) => {
-        const d = docSnap.data();
-        if (!d.updatedAt || now - d.updatedAt > 10000) {
-          try { await deleteDoc(docSnap.ref); } catch (_) {}
-        }
-      });
-    }
+    supportMsg.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        window.sendSupport();
+      }
+    });
 
-    bootstrapCleanup();
+    setInterval(() => updatePresence(), 20000);
+
+    window.addEventListener("beforeunload", () => {
+      setTypingState(false, false);
+      setTypingState(false, true);
+    });
+
+    updatePresence();
   </script>
-
 </body>
 </html>
