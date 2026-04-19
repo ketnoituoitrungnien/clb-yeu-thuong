@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Kết Nối Yêu Thương</title>
   <meta name="description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật" />
 
-  <!-- Preview chuẩn cho Messenger/Facebook -->
+  <!-- Preview Messenger/Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Kết Nối Yêu Thương" />
   <meta property="og:title" content="Kết Nối Yêu Thương" />
   <meta property="og:description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật" />
-  <meta property="og:url" content="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/" />
-  <meta property="og:image" content="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/preview.png" />
-  <meta property="og:image:secure_url" content="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/preview.png" />
+  <meta property="og:url" content="https://tuoitrungnien.com/" />
+  <meta property="og:image" content="https://tuoitrungnien.com/preview.png" />
+  <meta property="og:image:secure_url" content="https://tuoitrungnien.com/preview.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="1200" />
@@ -22,7 +21,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kết Nối Yêu Thương" />
   <meta name="twitter:description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật" />
-  <meta name="twitter:image" content="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/preview.png" />
+  <meta name="twitter:image" content="https://tuoitrungnien.com/preview.png" />
 
   <style>
     * { box-sizing: border-box; }
@@ -32,6 +31,7 @@
       background: linear-gradient(180deg, #fff8fb 0%, #ffeef4 100%);
       color: #5f3143;
     }
+    a { color: inherit; }
     .hidden { display: none !important; }
     .wrap {
       width: min(100%, 980px);
@@ -95,7 +95,7 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.15fr 0.85fr;
       gap: 16px;
       padding: 16px;
     }
@@ -122,7 +122,7 @@
       color: #96556c;
       font-size: 14px;
     }
-    .field input {
+    .field input, .field select {
       width: 100%;
       padding: 12px 14px;
       border-radius: 14px;
@@ -219,21 +219,11 @@
       margin-bottom: 14px;
       line-height: 1.5;
     }
-    .preview-button {
-      display: block;
-      width: 100%;
-      margin: 14px auto 8px;
-      padding: 16px 18px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #ff9fc0, #ee5d93);
-      color: #fff;
-      font-weight: 800;
-      font-size: 22px;
+    .small-center {
       text-align: center;
-      text-decoration: none;
-      box-shadow: 0 10px 22px rgba(238, 93, 147, 0.3);
+      font-size: 13px;
+      color: #9a6c7c;
     }
-    .small-center { text-align: center; font-size: 13px; color: #9a6c7c; }
     .mini-banner {
       width: 100%;
       border-radius: 20px;
@@ -256,7 +246,7 @@
       color: #c03f74;
     }
     .chat-body {
-      min-height: 180px;
+      min-height: 260px;
       padding: 14px;
       background: linear-gradient(180deg, #fff, #fff8fb);
     }
@@ -272,6 +262,18 @@
       background: #fff1f6;
       border: 1px solid #f2c7d7;
       color: #8e5f73;
+    }
+    .bubble.member {
+      background: #eef4ff;
+      border: 1px solid #c9dafd;
+      color: #355696;
+      margin-left: auto;
+    }
+    .bubble.female {
+      background: #fff0f7;
+      border: 1px solid #f4c5da;
+      color: #a43c72;
+      margin-left: auto;
     }
     .chat-input {
       display: flex;
@@ -297,10 +299,18 @@
       margin-top: 10px;
       display: none;
     }
+    .warning {
+      background: #fff6e9;
+      border: 1px solid #f3d7aa;
+      color: #8c5b16;
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 14px;
+      margin-top: 10px;
+    }
     @media (max-width: 768px) {
       .grid { grid-template-columns: 1fr; }
       .brand { font-size: 18px; }
-      .preview-button { font-size: 20px; }
       .join-room-name { font-size: 23px; }
       .wrap { padding: 12px; }
     }
@@ -313,7 +323,7 @@
         <div class="topbar">
           <div class="brand">
             <div class="logo">
-              <img src="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/logo-clb.png" alt="Logo CLB" onerror="this.style.display='none'" />
+              <img src="https://tuoitrungnien.com/logo-clb.png" alt="Logo CLB" onerror="this.style.display='none'" />
             </div>
             <div>
               <div>Kết Nối Yêu Thương</div>
@@ -322,17 +332,17 @@
           </div>
           <button id="openAdminBtn" class="btn btn-soft">Tạo phòng</button>
         </div>
-        <img class="banner" src="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/banner-clb.png" alt="Banner CLB" onerror="this.src='https://ketnoituoitrungnien.github.io/clb-yeu-thuong/preview.png'" />
+        <img class="banner" src="https://tuoitrungnien.com/banner-clb.png" alt="Banner CLB" onerror="this.src='https://tuoitrungnien.com/preview.png'" />
       </div>
 
       <div class="grid">
         <div class="section">
           <h2>Nhấn 1 chạm để vào phòng riêng</h2>
           <p class="muted">
-            Link gửi trong Messenger sẽ cố hiển thị ảnh preview đẹp của CLB. Khách chỉ cần bấm vào khung preview hoặc link là vào đúng phòng.
+            Khi gửi link trong Messenger, khách sẽ thấy ảnh preview đẹp của CLB. Chạm vào ảnh hoặc link là vào thẳng phòng chat.
           </p>
           <div class="note">
-            GitHub Pages là web tĩnh nên preview ngoài Messenger sẽ là ảnh chung <b>preview.png</b>. Nhưng bên trong link vẫn vào đúng phòng theo mã bạn tạo.
+            Nếu bạn dùng link đẹp dạng <b>/6789</b>, hệ thống sẽ tự hiểu đó là mã phòng và mở thẳng đúng phòng tương ứng.
           </div>
           <div style="margin-top:16px;">
             <span class="pill">1 link duy nhất</span>
@@ -346,29 +356,40 @@
           <h3>Tạo phòng nhanh</h3>
           <div class="field">
             <label for="roomCode">Mã phòng</label>
-            <input id="roomCode" type="text" placeholder="Ví dụ: hung-nga1" />
+            <input id="roomCode" type="text" placeholder="Ví dụ: 6789 hoặc hung-nga1" />
           </div>
           <div class="field">
             <label for="roomLabel">Tên hiển thị của phòng</label>
             <input id="roomLabel" type="text" placeholder="Ví dụ: Phòng Hùng - Nga" />
           </div>
-          <button id="createRoomBtn" class="btn btn-primary">Xuất 3 link</button>
+          <div class="field">
+            <label for="defaultGender">Loại link đẹp mặc định</label>
+            <select id="defaultGender">
+              <option value="f">Nữ</option>
+              <option value="m">Nam</option>
+              <option value="c">CSKH</option>
+            </select>
+          </div>
+          <button id="createRoomBtn" class="btn btn-primary">Xuất link</button>
           <button id="closeAdminBtn" class="btn btn-soft" style="margin-left:8px;">Đóng</button>
           <div id="copyOk" class="ok">Đã copy.</div>
           <div id="resultBox" class="result-box hidden"></div>
           <div class="note">
-            3 link gồm: hội viên nam, hội viên nữ, và CSKH. Bạn copy đúng link cần gửi. Nếu muốn mở quản trị ngay khi vào trang chính, dùng <b>?admin=1</b>.
+            Link đẹp dạng <b>https://tuoitrungnien.com/6789</b> sẽ tự vào theo vai trò mặc định bạn chọn. Nếu cần, bạn vẫn có thể dùng link đầy đủ cho nam, nữ, hoặc CSKH riêng.
           </div>
         </div>
 
         <div id="adminHint" class="section">
           <h3>Admin dùng rất nhanh</h3>
           <p class="muted">
-            Bấm <b>Tạo phòng</b> → nhập mã phòng → bấm <b>Xuất 3 link</b> → copy link gửi khách.
+            Bấm <b>Tạo phòng</b> → nhập mã phòng → bấm <b>Xuất link</b> → copy link đẹp gửi khách. Nếu muốn mở quản trị ngay khi vào trang chính, dùng <b>?admin=1</b>.
           </p>
           <div class="note">
             Link admin chung:<br>
-            <b>https://ketnoituoitrungnien.github.io/clb-yeu-thuong/?admin=1</b>
+            <b>https://tuoitrungnien.com/?admin=1</b>
+          </div>
+          <div class="warning">
+            Nếu sau này bạn muốn nối vào chat Firebase thật, chỉ cần thay phần giao diện mẫu bên trong phòng chat bằng khung chat thật của bạn.
           </div>
         </div>
       </div>
@@ -378,7 +399,7 @@
       <div class="join-card">
         <div class="brand" style="justify-content:center; margin-bottom:12px;">
           <div class="logo">
-            <img src="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/logo-clb.png" alt="Logo CLB" onerror="this.style.display='none'" />
+            <img src="https://tuoitrungnien.com/logo-clb.png" alt="Logo CLB" onerror="this.style.display='none'" />
           </div>
           <div>
             <div>Kết Nối Yêu Thương</div>
@@ -386,186 +407,222 @@
           </div>
         </div>
 
-        <img class="mini-banner" src="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/preview.png" alt="Preview CLB" onerror="this.src='https://ketnoituoitrungnien.github.io/clb-yeu-thuong/banner-clb.png'" />
+        <img class="mini-banner" src="https://tuoitrungnien.com/preview.png" alt="Preview CLB" onerror="this.src='https://tuoitrungnien.com/banner-clb.png'" />
         <div id="joinRoomName" class="join-room-name">Phòng riêng tư</div>
-        <div id="joinSub" class="join-sub">Chạm nút bên dưới để vào đúng phòng của bạn.</div>
-
-        <a id="enterRoomBtn" class="preview-button" href="#">Bấm vào để nhắn tin riêng</a>
+        <div id="joinSub" class="join-sub">Bạn đang vào thẳng phòng chat của mình.</div>
         <div class="small-center">Chỉ 1 chạm là vào • Không cần cài ứng dụng</div>
 
         <div class="chat-shell">
           <div class="chat-head" id="chatHead">Phòng chat</div>
-          <div class="chat-body">
+          <div class="chat-body" id="chatBody">
             <div class="bubble system">
-              Đây là bản full cho giao diện tạo phòng + link đẹp + preview Messenger. Bên dưới là giao diện chờ để khách có cảm giác yên tâm khi vừa bấm link vào.
+              Chào mừng bạn đến phòng riêng tư. Đây là giao diện vào thẳng phòng chat không có nút trung gian.
             </div>
             <div class="bubble system" id="roleBubble"></div>
           </div>
           <div class="chat-input">
-            <input type="text" placeholder="Nhập tin nhắn..." readonly />
-            <button class="btn btn-primary" type="button">Gửi</button>
+            <input type="text" id="fakeInput" placeholder="Nhập tin nhắn..." />
+            <button class="btn btn-primary" type="button" id="fakeSendBtn">Gửi</button>
           </div>
         </div>
 
         <div style="text-align:center; margin-top:14px;">
-          <a href="./" class="btn btn-soft" style="display:inline-block; text-decoration:none;">Về trang chính</a>
+          <a href="/" class="btn btn-soft" style="display:inline-block; text-decoration:none;">Về trang chính</a>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    const qs = new URLSearchParams(window.location.search);
-    const homeView = document.getElementById('homeView');
-    const joinView = document.getElementById('joinView');
-    const adminPanel = document.getElementById('adminPanel');
-    const adminHint = document.getElementById('adminHint');
-    const resultBox = document.getElementById('resultBox');
-    const copyOk = document.getElementById('copyOk');
-    const roomCodeInput = document.getElementById('roomCode');
-    const roomLabelInput = document.getElementById('roomLabel');
+    (function () {
+      const qs = new URLSearchParams(window.location.search);
+      const path = window.location.pathname;
 
-    const currentRoom = qs.get('r') || '';
-    const currentGender = qs.get('g') || '';
-    const currentAdmin = qs.get('admin') || '';
-
-    function slugify(text) {
-      return (text || '')
-        .toString()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '');
-    }
-
-    function htmlEncode(str) {
-      return (str || '').replace(/[&<>\"']/g, function(m) {
-        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m];
-      });
-    }
-
-    function baseUrl() {
-      return window.location.origin + window.location.pathname;
-    }
-
-    function showCopy(message) {
-      copyOk.textContent = message || 'Đã copy.';
-      copyOk.style.display = 'block';
-      setTimeout(() => copyOk.style.display = 'none', 1600);
-    }
-
-    async function copyText(value) {
-      try {
-        await navigator.clipboard.writeText(value);
-        showCopy('Đã copy link.');
-      } catch (e) {
-        alert('Không copy tự động được. Bạn hãy bôi đen và copy thủ công.');
-      }
-    }
-
-    function renderAdminResults(roomCode, roomLabel) {
-      const base = baseUrl();
-      const encodedRoom = encodeURIComponent(roomCode);
-      const label = roomLabel || ('Phòng ' + roomCode);
-
-      const maleLink = `${base}?r=${encodedRoom}&g=m`;
-      const femaleLink = `${base}?r=${encodedRoom}&g=f`;
-      const cskhLink = `${base}?r=${encodedRoom}&g=c`;
-
-      resultBox.classList.remove('hidden');
-      resultBox.innerHTML = `
-        <div class="result-item">
-          <div class="result-label">Link hội viên nam</div>
-          <div class="linkline">${htmlEncode(maleLink)}</div>
-          <button class="btn btn-soft" data-copy="${htmlEncode(maleLink)}">Copy link nam</button>
-        </div>
-        <div class="result-item">
-          <div class="result-label">Link hội viên nữ</div>
-          <div class="linkline">${htmlEncode(femaleLink)}</div>
-          <button class="btn btn-soft" data-copy="${htmlEncode(femaleLink)}">Copy link nữ</button>
-        </div>
-        <div class="result-item">
-          <div class="result-label">Link CSKH</div>
-          <div class="linkline">${htmlEncode(cskhLink)}</div>
-          <button class="btn btn-soft" data-copy="${htmlEncode(cskhLink)}">Copy link CSKH</button>
-        </div>
-        <div class="note">
-          Phòng vừa tạo: <b>${htmlEncode(label)}</b><br>
-          Mã phòng: <b>${htmlEncode(roomCode)}</b>
-        </div>
-      `;
-
-      resultBox.querySelectorAll('[data-copy]').forEach(btn => {
-        btn.addEventListener('click', () => copyText(btn.getAttribute('data-copy')));
-      });
-    }
-
-    function openAdminPanel() {
-      adminPanel.classList.remove('hidden');
-      adminHint.classList.add('hidden');
-      roomCodeInput.focus();
-    }
-
-    function closeAdminPanel() {
-      adminPanel.classList.add('hidden');
-      adminHint.classList.remove('hidden');
-    }
-
-    function setupHome() {
-      homeView.classList.remove('hidden');
-      joinView.classList.add('hidden');
-
-      document.getElementById('openAdminBtn').addEventListener('click', openAdminPanel);
-      document.getElementById('closeAdminBtn').addEventListener('click', closeAdminPanel);
-      document.getElementById('createRoomBtn').addEventListener('click', () => {
-        const rawCode = roomCodeInput.value.trim();
-        const rawLabel = roomLabelInput.value.trim();
-        const roomCode = slugify(rawCode || rawLabel);
-        const roomLabel = rawLabel || ('Phòng ' + roomCode);
-
-        if (!roomCode) {
-          alert('Bạn hãy nhập mã phòng hoặc tên phòng.');
-          roomCodeInput.focus();
+      // Hỗ trợ link đẹp dạng /6789 hoặc /hung-nga1
+      // Nếu đang là path khác root và chưa có query r= thì tự chuyển về query cũ để hệ thống hiểu
+      if (!qs.get('r') && path && path !== '/' && path !== '/index.html') {
+        const roomFromPath = decodeURIComponent(path.replace(/^\//, '').replace(/\/$/, ''));
+        if (roomFromPath && roomFromPath !== 'favicon.ico') {
+          const newUrl = `${window.location.origin}/?r=${encodeURIComponent(roomFromPath)}&g=f`;
+          window.location.replace(newUrl);
           return;
         }
-        renderAdminResults(roomCode, roomLabel);
-      });
+      }
 
-      if (currentAdmin === '1') openAdminPanel();
-    }
+      const homeView = document.getElementById('homeView');
+      const joinView = document.getElementById('joinView');
+      const adminPanel = document.getElementById('adminPanel');
+      const adminHint = document.getElementById('adminHint');
+      const resultBox = document.getElementById('resultBox');
+      const copyOk = document.getElementById('copyOk');
+      const roomCodeInput = document.getElementById('roomCode');
+      const roomLabelInput = document.getElementById('roomLabel');
+      const defaultGenderSelect = document.getElementById('defaultGender');
 
-    function setupJoin() {
-      homeView.classList.add('hidden');
-      joinView.classList.remove('hidden');
+      const currentRoom = qs.get('r') || '';
+      const currentGender = qs.get('g') || '';
+      const currentAdmin = qs.get('admin') || '';
 
-      const roomName = currentRoom ? ('Phòng ' + currentRoom.replace(/-/g, ' ')) : 'Phòng riêng tư';
-      const roleText = currentGender === 'm'
-        ? 'Bạn đang vào bằng link hội viên nam.'
-        : currentGender === 'f'
-          ? 'Bạn đang vào bằng link hội viên nữ.'
-          : currentGender === 'c'
-            ? 'Bạn đang vào bằng link CSKH.'
-            : 'Bạn đang vào bằng link chung.';
+      function slugify(text) {
+        return (text || '')
+          .toString()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+      }
 
-      document.getElementById('joinRoomName').textContent = roomName;
-      document.getElementById('chatHead').textContent = roomName;
-      document.getElementById('roleBubble').textContent = roleText;
+      function htmlEncode(str) {
+        return (str || '').replace(/[&<>\"']/g, function (m) {
+          return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m];
+        });
+      }
 
-      const enterRoomBtn = document.getElementById('enterRoomBtn');
-      enterRoomBtn.href = '#';
-      enterRoomBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('Nếu bạn muốn nối sang khu chat thật/Firebase, mình sẽ thay bước này bằng phần vào chat thật cho đúng phòng ' + currentRoom + '.');
-      });
-    }
+      function baseOrigin() {
+        return window.location.origin;
+      }
 
-    if (currentRoom) {
-      setupJoin();
-    } else {
-      setupHome();
-    }
+      function showCopy(message) {
+        copyOk.textContent = message || 'Đã copy.';
+        copyOk.style.display = 'block';
+        setTimeout(() => { copyOk.style.display = 'none'; }, 1600);
+      }
+
+      async function copyText(value) {
+        try {
+          await navigator.clipboard.writeText(value);
+          showCopy('Đã copy link.');
+        } catch (e) {
+          alert('Không copy tự động được. Bạn hãy bôi đen và copy thủ công.');
+        }
+      }
+
+      function renderAdminResults(roomCode, roomLabel, defaultGender) {
+        const origin = baseOrigin();
+        const encodedRoom = encodeURIComponent(roomCode);
+        const label = roomLabel || ('Phòng ' + roomCode);
+        const prettyLink = `${origin}/${roomCode}`;
+        const maleLink = `${origin}/?r=${encodedRoom}&g=m`;
+        const femaleLink = `${origin}/?r=${encodedRoom}&g=f`;
+        const cskhLink = `${origin}/?r=${encodedRoom}&g=c`;
+        const prettyGenderLabel = defaultGender === 'm' ? 'nam' : defaultGender === 'c' ? 'CSKH' : 'nữ';
+
+        resultBox.classList.remove('hidden');
+        resultBox.innerHTML = `
+          <div class="result-item">
+            <div class="result-label">Link đẹp gửi khách</div>
+            <div class="linkline">${htmlEncode(prettyLink)}</div>
+            <button class="btn btn-soft" data-copy="${htmlEncode(prettyLink)}">Copy link đẹp</button>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Link hội viên nam</div>
+            <div class="linkline">${htmlEncode(maleLink)}</div>
+            <button class="btn btn-soft" data-copy="${htmlEncode(maleLink)}">Copy link nam</button>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Link hội viên nữ</div>
+            <div class="linkline">${htmlEncode(femaleLink)}</div>
+            <button class="btn btn-soft" data-copy="${htmlEncode(femaleLink)}">Copy link nữ</button>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Link CSKH</div>
+            <div class="linkline">${htmlEncode(cskhLink)}</div>
+            <button class="btn btn-soft" data-copy="${htmlEncode(cskhLink)}">Copy link CSKH</button>
+          </div>
+          <div class="note">
+            Phòng vừa tạo: <b>${htmlEncode(label)}</b><br>
+            Mã phòng: <b>${htmlEncode(roomCode)}</b><br>
+            Link đẹp mặc định đang mở theo vai trò: <b>${htmlEncode(prettyGenderLabel)}</b>
+          </div>
+        `;
+
+        resultBox.querySelectorAll('[data-copy]').forEach(btn => {
+          btn.addEventListener('click', () => copyText(btn.getAttribute('data-copy')));
+        });
+      }
+
+      function openAdminPanel() {
+        adminPanel.classList.remove('hidden');
+        adminHint.classList.add('hidden');
+        roomCodeInput.focus();
+      }
+
+      function closeAdminPanel() {
+        adminPanel.classList.add('hidden');
+        adminHint.classList.remove('hidden');
+      }
+
+      function setupHome() {
+        homeView.classList.remove('hidden');
+        joinView.classList.add('hidden');
+
+        document.getElementById('openAdminBtn').addEventListener('click', openAdminPanel);
+        document.getElementById('closeAdminBtn').addEventListener('click', closeAdminPanel);
+        document.getElementById('createRoomBtn').addEventListener('click', () => {
+          const rawCode = roomCodeInput.value.trim();
+          const rawLabel = roomLabelInput.value.trim();
+          const defaultGender = defaultGenderSelect.value;
+          const roomCode = slugify(rawCode || rawLabel);
+          const roomLabel = rawLabel || ('Phòng ' + roomCode);
+
+          if (!roomCode) {
+            alert('Bạn hãy nhập mã phòng hoặc tên phòng.');
+            roomCodeInput.focus();
+            return;
+          }
+          renderAdminResults(roomCode, roomLabel, defaultGender);
+        });
+
+        if (currentAdmin === '1') openAdminPanel();
+      }
+
+      function setupJoin() {
+        homeView.classList.add('hidden');
+        joinView.classList.remove('hidden');
+
+        const roomName = currentRoom ? ('Phòng ' + currentRoom.replace(/-/g, ' ')) : 'Phòng riêng tư';
+        const roleText = currentGender === 'm'
+          ? 'Bạn đang vào bằng link hội viên nam.'
+          : currentGender === 'f'
+            ? 'Bạn đang vào bằng link hội viên nữ.'
+            : currentGender === 'c'
+              ? 'Bạn đang vào bằng link CSKH.'
+              : 'Bạn đang vào bằng link chung.';
+
+        document.getElementById('joinRoomName').textContent = roomName;
+        document.getElementById('chatHead').textContent = roomName;
+        document.getElementById('roleBubble').textContent = roleText;
+
+        const chatBody = document.getElementById('chatBody');
+        const fakeInput = document.getElementById('fakeInput');
+        const fakeSendBtn = document.getElementById('fakeSendBtn');
+
+        fakeSendBtn.addEventListener('click', function () {
+          const text = fakeInput.value.trim();
+          if (!text) return;
+          const bubble = document.createElement('div');
+          bubble.className = 'bubble ' + (currentGender === 'f' ? 'female' : 'member');
+          bubble.textContent = text;
+          chatBody.appendChild(bubble);
+          fakeInput.value = '';
+          chatBody.scrollTop = chatBody.scrollHeight;
+        });
+
+        fakeInput.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter') {
+            fakeSendBtn.click();
+          }
+        });
+      }
+
+      if (currentRoom) {
+        setupJoin();
+      } else {
+        setupHome();
+      }
+    })();
   </script>
 </body>
 </html>
