@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+var path = window.location.pathname.replace(/^\/|\/$/g, "");
+if(path){
+  window.location.replace("/?r=" + path + "&g=f");
+}else{
+  window.location.replace("/");
+}
+</script>
+</head>
+<body></body>
+</html>

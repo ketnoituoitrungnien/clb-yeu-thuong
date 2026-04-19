@@ -1,628 +1,68 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kết Nối Yêu Thương</title>
-  <meta name="description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kết Nối Yêu Thương</title>
 
-  <!-- Preview Messenger/Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Kết Nối Yêu Thương" />
-  <meta property="og:title" content="Kết Nối Yêu Thương" />
-  <meta property="og:description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật" />
-  <meta property="og:url" content="https://tuoitrungnien.com/" />
-  <meta property="og:image" content="https://tuoitrungnien.com/preview.png" />
-  <meta property="og:image:secure_url" content="https://tuoitrungnien.com/preview.png" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="1200" />
+<!-- PREVIEW -->
+<meta property="og:title" content="Kết Nối Yêu Thương">
+<meta property="og:description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật">
+<meta property="og:image" content="https://tuoitrungnien.com/preview.png">
+<meta property="og:url" content="https://tuoitrungnien.com/">
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Kết Nối Yêu Thương" />
-  <meta name="twitter:description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật" />
-  <meta name="twitter:image" content="https://tuoitrungnien.com/preview.png" />
-
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #fff8fb 0%, #ffeef4 100%);
-      color: #5f3143;
-    }
-    a { color: inherit; }
-    .hidden { display: none !important; }
-    .wrap {
-      width: min(100%, 980px);
-      margin: 0 auto;
-      padding: 16px;
-    }
-    .card {
-      background: rgba(255,255,255,0.96);
-      border: 1px solid #f5c9d7;
-      border-radius: 22px;
-      box-shadow: 0 10px 30px rgba(197, 94, 132, 0.12);
-      overflow: hidden;
-    }
-    .hero {
-      position: relative;
-      background: linear-gradient(135deg, #fff3f7 0%, #ffdbe8 100%);
-      padding: 18px;
-    }
-    .hero img.banner {
-      width: 100%;
-      display: block;
-      border-radius: 20px;
-      border: 1px solid #f6d6e1;
-    }
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 700;
-      color: #c03f74;
-      font-size: 20px;
-    }
-    .logo {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid #ffd1e1;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex: 0 0 44px;
-    }
-    .logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .tag {
-      font-size: 13px;
-      color: #9c6179;
-      font-weight: 600;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 16px;
-      padding: 16px;
-    }
-    .section {
-      padding: 16px;
-      border-radius: 18px;
-      border: 1px solid #f6d7e2;
-      background: #fff;
-    }
-    .section h2, .section h3 {
-      margin: 0 0 12px;
-      color: #c23f75;
-    }
-    .muted {
-      color: #9b6f80;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-    .field { margin-bottom: 12px; }
-    .field label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 700;
-      color: #96556c;
-      font-size: 14px;
-    }
-    .field input, .field select {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid #ebb8ca;
-      background: #fffafd;
-      font-size: 16px;
-      outline: none;
-    }
-    .btn {
-      border: none;
-      border-radius: 999px;
-      padding: 12px 18px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.15s ease, opacity 0.15s ease;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-primary {
-      background: linear-gradient(135deg, #f16d9e, #d84f86);
-      color: white;
-      box-shadow: 0 8px 18px rgba(216,79,134,0.25);
-    }
-    .btn-soft {
-      background: #fff1f6;
-      color: #c03f74;
-      border: 1px solid #f2bfd2;
-    }
-    .result-box {
-      margin-top: 12px;
-      padding: 14px;
-      border-radius: 16px;
-      background: #fff7fa;
-      border: 1px dashed #e9a9c0;
-    }
-    .result-item {
-      padding: 12px;
-      border-radius: 14px;
-      background: white;
-      border: 1px solid #f3d5df;
-      margin-bottom: 10px;
-    }
-    .result-item:last-child { margin-bottom: 0; }
-    .result-label {
-      display: inline-block;
-      font-weight: 700;
-      color: #c03f74;
-      margin-bottom: 6px;
-    }
-    .linkline {
-      word-break: break-all;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #7b4a5e;
-      margin-bottom: 10px;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #fff0f6;
-      border: 1px solid #f3bfd2;
-      color: #b64072;
-      font-size: 12px;
-      font-weight: 700;
-      margin-right: 6px;
-      margin-bottom: 6px;
-    }
-    .note {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #99677a;
-      background: #fff8fb;
-      border: 1px solid #f3d7e1;
-      border-radius: 14px;
-      padding: 12px;
-      line-height: 1.5;
-    }
-    .join-card {
-      padding: 18px;
-    }
-    .join-room-name {
-      font-size: 26px;
-      font-weight: 800;
-      color: #c03f74;
-      margin: 10px 0 6px;
-      text-align: center;
-      text-transform: capitalize;
-    }
-    .join-sub {
-      text-align: center;
-      color: #8d6171;
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
-    .small-center {
-      text-align: center;
-      font-size: 13px;
-      color: #9a6c7c;
-    }
-    .mini-banner {
-      width: 100%;
-      border-radius: 20px;
-      display: block;
-      border: 1px solid #f4d7e2;
-      margin-bottom: 14px;
-    }
-    .chat-shell {
-      margin-top: 14px;
-      border-radius: 20px;
-      border: 1px solid #f3d4df;
-      overflow: hidden;
-      background: #fff;
-    }
-    .chat-head {
-      padding: 14px 16px;
-      background: linear-gradient(135deg, #fff2f7, #ffe4ee);
-      border-bottom: 1px solid #f3d4df;
-      font-weight: 700;
-      color: #c03f74;
-    }
-    .chat-body {
-      min-height: 260px;
-      padding: 14px;
-      background: linear-gradient(180deg, #fff, #fff8fb);
-    }
-    .bubble {
-      max-width: 82%;
-      padding: 10px 12px;
-      border-radius: 16px;
-      margin-bottom: 10px;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-    .bubble.system {
-      background: #fff1f6;
-      border: 1px solid #f2c7d7;
-      color: #8e5f73;
-    }
-    .bubble.member {
-      background: #eef4ff;
-      border: 1px solid #c9dafd;
-      color: #355696;
-      margin-left: auto;
-    }
-    .bubble.female {
-      background: #fff0f7;
-      border: 1px solid #f4c5da;
-      color: #a43c72;
-      margin-left: auto;
-    }
-    .chat-input {
-      display: flex;
-      gap: 8px;
-      padding: 12px;
-      border-top: 1px solid #f3d4df;
-      background: #fff;
-    }
-    .chat-input input {
-      flex: 1;
-      border: 1px solid #e8b6c9;
-      border-radius: 999px;
-      padding: 12px 14px;
-      font-size: 15px;
-    }
-    .ok {
-      background: #effff5;
-      border: 1px solid #bfe7cb;
-      color: #2d7a48;
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-size: 14px;
-      margin-top: 10px;
-      display: none;
-    }
-    .warning {
-      background: #fff6e9;
-      border: 1px solid #f3d7aa;
-      color: #8c5b16;
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-    @media (max-width: 768px) {
-      .grid { grid-template-columns: 1fr; }
-      .brand { font-size: 18px; }
-      .join-room-name { font-size: 23px; }
-      .wrap { padding: 12px; }
-    }
-  </style>
+<style>
+body{font-family:Arial;background:#fff7fa;margin:0}
+.wrap{max-width:900px;margin:auto;padding:20px}
+.box{background:#fff;border:1px solid #f2ccd8;border-radius:20px;padding:20px}
+input{padding:10px;width:100%;border-radius:10px;border:1px solid #ddd}
+button{padding:10px 15px;border:none;border-radius:20px;background:#e6528a;color:#fff;font-weight:bold}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div id="homeView" class="card">
-      <div class="hero">
-        <div class="topbar">
-          <div class="brand">
-            <div class="logo">
-              <img src="https://tuoitrungnien.com/logo-clb.png" alt="Logo CLB" onerror="this.style.display='none'" />
-            </div>
-            <div>
-              <div>Kết Nối Yêu Thương</div>
-              <div class="tag">Tuổi Trung Niên · Chân thành · Uy tín · Bảo mật</div>
-            </div>
-          </div>
-          <button id="openAdminBtn" class="btn btn-soft">Tạo phòng</button>
-        </div>
-        <img class="banner" src="https://tuoitrungnien.com/banner-clb.png" alt="Banner CLB" onerror="this.src='https://tuoitrungnien.com/preview.png'" />
-      </div>
+<div class="wrap">
 
-      <div class="grid">
-        <div class="section">
-          <h2>Nhấn 1 chạm để vào phòng riêng</h2>
-          <p class="muted">
-            Khi gửi link trong Messenger, khách sẽ thấy ảnh preview đẹp của CLB. Chạm vào ảnh hoặc link là vào thẳng phòng chat.
-          </p>
-          <div class="note">
-            Nếu bạn dùng link đẹp dạng <b>/6789</b>, hệ thống sẽ tự hiểu đó là mã phòng và mở thẳng đúng phòng tương ứng.
-          </div>
-          <div style="margin-top:16px;">
-            <span class="pill">1 link duy nhất</span>
-            <span class="pill">Preview đẹp</span>
-            <span class="pill">Không cần app</span>
-            <span class="pill">Điện thoại dùng dễ</span>
-          </div>
-        </div>
+<div class="box">
+<h2>Tạo phòng (Admin)</h2>
 
-        <div id="adminPanel" class="section hidden">
-          <h3>Tạo phòng nhanh</h3>
-          <div class="field">
-            <label for="roomCode">Mã phòng</label>
-            <input id="roomCode" type="text" placeholder="Ví dụ: 6789 hoặc hung-nga1" />
-          </div>
-          <div class="field">
-            <label for="roomLabel">Tên hiển thị của phòng</label>
-            <input id="roomLabel" type="text" placeholder="Ví dụ: Phòng Hùng - Nga" />
-          </div>
-          <div class="field">
-            <label for="defaultGender">Loại link đẹp mặc định</label>
-            <select id="defaultGender">
-              <option value="f">Nữ</option>
-              <option value="m">Nam</option>
-              <option value="c">CSKH</option>
-            </select>
-          </div>
-          <button id="createRoomBtn" class="btn btn-primary">Xuất link</button>
-          <button id="closeAdminBtn" class="btn btn-soft" style="margin-left:8px;">Đóng</button>
-          <div id="copyOk" class="ok">Đã copy.</div>
-          <div id="resultBox" class="result-box hidden"></div>
-          <div class="note">
-            Link đẹp dạng <b>https://tuoitrungnien.com/6789</b> sẽ tự vào theo vai trò mặc định bạn chọn. Nếu cần, bạn vẫn có thể dùng link đầy đủ cho nam, nữ, hoặc CSKH riêng.
-          </div>
-        </div>
+<input id="roomCode" placeholder="Nhập số phòng ví dụ 6789">
+<br><br>
+<button onclick="taoPhong()">Xuất link</button>
 
-        <div id="adminHint" class="section">
-          <h3>Admin dùng rất nhanh</h3>
-          <p class="muted">
-            Bấm <b>Tạo phòng</b> → nhập mã phòng → bấm <b>Xuất link</b> → copy link đẹp gửi khách. Nếu muốn mở quản trị ngay khi vào trang chính, dùng <b>?admin=1</b>.
-          </p>
-          <div class="note">
-            Link admin chung:<br>
-            <b>https://tuoitrungnien.com/?admin=1</b>
-          </div>
-          <div class="warning">
-            Nếu sau này bạn muốn nối vào chat Firebase thật, chỉ cần thay phần giao diện mẫu bên trong phòng chat bằng khung chat thật của bạn.
-          </div>
-        </div>
-      </div>
-    </div>
+<div id="result" style="margin-top:15px;"></div>
+</div>
 
-    <div id="joinView" class="card hidden">
-      <div class="join-card">
-        <div class="brand" style="justify-content:center; margin-bottom:12px;">
-          <div class="logo">
-            <img src="https://tuoitrungnien.com/logo-clb.png" alt="Logo CLB" onerror="this.style.display='none'" />
-          </div>
-          <div>
-            <div>Kết Nối Yêu Thương</div>
-            <div class="tag">Tuổi Trung Niên · Chân thành · Uy tín · Bảo mật</div>
-          </div>
-        </div>
+</div>
 
-        <img class="mini-banner" src="https://tuoitrungnien.com/preview.png" alt="Preview CLB" onerror="this.src='https://tuoitrungnien.com/banner-clb.png'" />
-        <div id="joinRoomName" class="join-room-name">Phòng riêng tư</div>
-        <div id="joinSub" class="join-sub">Bạn đang vào thẳng phòng chat của mình.</div>
-        <div class="small-center">Chỉ 1 chạm là vào • Không cần cài ứng dụng</div>
+<script>
+function taoPhong(){
+  let raw = document.getElementById("roomCode").value;
+  let num = raw.replace(/\\D/g,'');
+  if(!num){ alert("Nhập số phòng"); return;}
 
-        <div class="chat-shell">
-          <div class="chat-head" id="chatHead">Phòng chat</div>
-          <div class="chat-body" id="chatBody">
-            <div class="bubble system">
-              Chào mừng bạn đến phòng riêng tư. Đây là giao diện vào thẳng phòng chat không có nút trung gian.
-            </div>
-            <div class="bubble system" id="roleBubble"></div>
-          </div>
-          <div class="chat-input">
-            <input type="text" id="fakeInput" placeholder="Nhập tin nhắn..." />
-            <button class="btn btn-primary" type="button" id="fakeSendBtn">Gửi</button>
-          </div>
-        </div>
+  let room = "p"+num;
+  let link = location.origin + "/" + room;
 
-        <div style="text-align:center; margin-top:14px;">
-          <a href="/" class="btn btn-soft" style="display:inline-block; text-decoration:none;">Về trang chính</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  document.getElementById("result").innerHTML = `
+    <div>${link}</div>
+    <button onclick="copyLink('${link}')">Copy</button>
+  `;
+}
 
-  <script>
-    (function () {
-      const qs = new URLSearchParams(window.location.search);
-      const path = window.location.pathname;
+function copyLink(link){
+  navigator.clipboard.writeText(link);
+  alert("Đã copy");
+}
 
-      // Hỗ trợ link đẹp dạng /6789 hoặc /hung-nga1
-      // Nếu đang là path khác root và chưa có query r= thì tự chuyển về query cũ để hệ thống hiểu
-      if (!qs.get('r') && path && path !== '/' && path !== '/index.html') {
-        const roomFromPath = decodeURIComponent(path.replace(/^\//, '').replace(/\/$/, ''));
-        if (roomFromPath && roomFromPath !== 'favicon.ico') {
-          const newUrl = `${window.location.origin}/?r=${encodeURIComponent(roomFromPath)}&g=f`;
-          window.location.replace(newUrl);
-          return;
-        }
-      }
+// vào phòng
+const params = new URLSearchParams(location.search);
+const r = params.get("r");
 
-      const homeView = document.getElementById('homeView');
-      const joinView = document.getElementById('joinView');
-      const adminPanel = document.getElementById('adminPanel');
-      const adminHint = document.getElementById('adminHint');
-      const resultBox = document.getElementById('resultBox');
-      const copyOk = document.getElementById('copyOk');
-      const roomCodeInput = document.getElementById('roomCode');
-      const roomLabelInput = document.getElementById('roomLabel');
-      const defaultGenderSelect = document.getElementById('defaultGender');
+if(r){
+  document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px'>Đã vào phòng "+r+"</h2>";
+}
+</script>
 
-      const currentRoom = qs.get('r') || '';
-      const currentGender = qs.get('g') || '';
-      const currentAdmin = qs.get('admin') || '';
-
-      function slugify(text) {
-        return (text || '')
-          .toString()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '')
-          .toLowerCase()
-          .trim()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-+|-+$/g, '');
-      }
-
-      function htmlEncode(str) {
-        return (str || '').replace(/[&<>\"']/g, function (m) {
-          return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m];
-        });
-      }
-
-      function baseOrigin() {
-        return window.location.origin;
-      }
-
-      function showCopy(message) {
-        copyOk.textContent = message || 'Đã copy.';
-        copyOk.style.display = 'block';
-        setTimeout(() => { copyOk.style.display = 'none'; }, 1600);
-      }
-
-      async function copyText(value) {
-        try {
-          await navigator.clipboard.writeText(value);
-          showCopy('Đã copy link.');
-        } catch (e) {
-          alert('Không copy tự động được. Bạn hãy bôi đen và copy thủ công.');
-        }
-      }
-
-      function renderAdminResults(roomCode, roomLabel, defaultGender) {
-        const origin = baseOrigin();
-        const encodedRoom = encodeURIComponent(roomCode);
-        const label = roomLabel || ('Phòng ' + roomCode);
-        const prettyLink = `${origin}/${roomCode}`;
-        const maleLink = `${origin}/?r=${encodedRoom}&g=m`;
-        const femaleLink = `${origin}/?r=${encodedRoom}&g=f`;
-        const cskhLink = `${origin}/?r=${encodedRoom}&g=c`;
-        const prettyGenderLabel = defaultGender === 'm' ? 'nam' : defaultGender === 'c' ? 'CSKH' : 'nữ';
-
-        resultBox.classList.remove('hidden');
-        resultBox.innerHTML = `
-          <div class="result-item">
-            <div class="result-label">Link đẹp gửi khách</div>
-            <div class="linkline">${htmlEncode(prettyLink)}</div>
-            <button class="btn btn-soft" data-copy="${htmlEncode(prettyLink)}">Copy link đẹp</button>
-          </div>
-          <div class="result-item">
-            <div class="result-label">Link hội viên nam</div>
-            <div class="linkline">${htmlEncode(maleLink)}</div>
-            <button class="btn btn-soft" data-copy="${htmlEncode(maleLink)}">Copy link nam</button>
-          </div>
-          <div class="result-item">
-            <div class="result-label">Link hội viên nữ</div>
-            <div class="linkline">${htmlEncode(femaleLink)}</div>
-            <button class="btn btn-soft" data-copy="${htmlEncode(femaleLink)}">Copy link nữ</button>
-          </div>
-          <div class="result-item">
-            <div class="result-label">Link CSKH</div>
-            <div class="linkline">${htmlEncode(cskhLink)}</div>
-            <button class="btn btn-soft" data-copy="${htmlEncode(cskhLink)}">Copy link CSKH</button>
-          </div>
-          <div class="note">
-            Phòng vừa tạo: <b>${htmlEncode(label)}</b><br>
-            Mã phòng: <b>${htmlEncode(roomCode)}</b><br>
-            Link đẹp mặc định đang mở theo vai trò: <b>${htmlEncode(prettyGenderLabel)}</b>
-          </div>
-        `;
-
-        resultBox.querySelectorAll('[data-copy]').forEach(btn => {
-          btn.addEventListener('click', () => copyText(btn.getAttribute('data-copy')));
-        });
-      }
-
-      function openAdminPanel() {
-        adminPanel.classList.remove('hidden');
-        adminHint.classList.add('hidden');
-        roomCodeInput.focus();
-      }
-
-      function closeAdminPanel() {
-        adminPanel.classList.add('hidden');
-        adminHint.classList.remove('hidden');
-      }
-
-      function setupHome() {
-        homeView.classList.remove('hidden');
-        joinView.classList.add('hidden');
-
-        document.getElementById('openAdminBtn').addEventListener('click', openAdminPanel);
-        document.getElementById('closeAdminBtn').addEventListener('click', closeAdminPanel);
-        document.getElementById('createRoomBtn').addEventListener('click', () => {
-          const rawCode = roomCodeInput.value.trim();
-          const rawLabel = roomLabelInput.value.trim();
-          const defaultGender = defaultGenderSelect.value;
-          const roomCode = slugify(rawCode || rawLabel);
-          const roomLabel = rawLabel || ('Phòng ' + roomCode);
-
-          if (!roomCode) {
-            alert('Bạn hãy nhập mã phòng hoặc tên phòng.');
-            roomCodeInput.focus();
-            return;
-          }
-          renderAdminResults(roomCode, roomLabel, defaultGender);
-        });
-
-        if (currentAdmin === '1') openAdminPanel();
-      }
-
-      function setupJoin() {
-        homeView.classList.add('hidden');
-        joinView.classList.remove('hidden');
-
-        const roomName = currentRoom ? ('Phòng ' + currentRoom.replace(/-/g, ' ')) : 'Phòng riêng tư';
-        const roleText = currentGender === 'm'
-          ? 'Bạn đang vào bằng link hội viên nam.'
-          : currentGender === 'f'
-            ? 'Bạn đang vào bằng link hội viên nữ.'
-            : currentGender === 'c'
-              ? 'Bạn đang vào bằng link CSKH.'
-              : 'Bạn đang vào bằng link chung.';
-
-        document.getElementById('joinRoomName').textContent = roomName;
-        document.getElementById('chatHead').textContent = roomName;
-        document.getElementById('roleBubble').textContent = roleText;
-
-        const chatBody = document.getElementById('chatBody');
-        const fakeInput = document.getElementById('fakeInput');
-        const fakeSendBtn = document.getElementById('fakeSendBtn');
-
-        fakeSendBtn.addEventListener('click', function () {
-          const text = fakeInput.value.trim();
-          if (!text) return;
-          const bubble = document.createElement('div');
-          bubble.className = 'bubble ' + (currentGender === 'f' ? 'female' : 'member');
-          bubble.textContent = text;
-          chatBody.appendChild(bubble);
-          fakeInput.value = '';
-          chatBody.scrollTop = chatBody.scrollHeight;
-        });
-
-        fakeInput.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter') {
-            fakeSendBtn.click();
-          }
-        });
-      }
-
-      if (currentRoom) {
-        setupJoin();
-      } else {
-        setupHome();
-      }
-    })();
-  </script>
 </body>
 </html>
