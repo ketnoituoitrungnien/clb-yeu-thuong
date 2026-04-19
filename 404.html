@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <script>
-var path = window.location.pathname.replace(/^\/|\/$/g, "");
-if(path){
-  window.location.replace("/?r=" + path + "&g=f");
-}else{
-  window.location.replace("/");
-}
+(function () {
+  var path = location.pathname.replace("/", "");
+  if (path) {
+    location.replace("/?room=" + path + "&role=female");
+  } else {
+    location.replace("/");
+  }
+})();
 </script>
 </head>
 <body></body>

@@ -2,65 +2,110 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kết Nối Yêu Thương</title>
 
-<!-- PREVIEW -->
+<!-- Facebook preview -->
 <meta property="og:title" content="Kết Nối Yêu Thương">
 <meta property="og:description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật">
-<meta property="og:image" content="https://tuoitrungnien.com/preview.png">
-<meta property="og:url" content="https://tuoitrungnien.com/">
+<meta property="og:image" content="https://tuoitrungnien.com/banner-clb.png">
+<meta property="og:url" content="https://tuoitrungnien.com">
+<meta property="og:type" content="website">
 
 <style>
-body{font-family:Arial;background:#fff7fa;margin:0}
-.wrap{max-width:900px;margin:auto;padding:20px}
-.box{background:#fff;border:1px solid #f2ccd8;border-radius:20px;padding:20px}
-input{padding:10px;width:100%;border-radius:10px;border:1px solid #ddd}
-button{padding:10px 15px;border:none;border-radius:20px;background:#e6528a;color:#fff;font-weight:bold}
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#fff5f7;
+  text-align:center;
+}
+.wrap{
+  padding:30px;
+}
+.admin{
+  background:#fff;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:20px;
+}
+input{
+  padding:10px;
+  width:200px;
+}
+button{
+  padding:10px 15px;
+  background:#ff4d88;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+.linkbox{
+  margin-top:10px;
+  background:#fff;
+  padding:10px;
+  border-radius:8px;
+}
+.chat{
+  margin-top:30px;
+  padding:20px;
+  background:#fff;
+  border-radius:10px;
+}
 </style>
 </head>
 
 <body>
 <div class="wrap">
 
-<div class="box">
-<h2>Tạo phòng (Admin)</h2>
+<!-- ADMIN -->
+<div id="admin" class="admin" style="display:none;">
+  <h3>Tạo phòng</h3>
+  <input id="room" placeholder="Nhập mã phòng">
+  <br><br>
+  <button onclick="create()">Xuất 3 link</button>
 
-<input id="roomCode" placeholder="Nhập số phòng ví dụ 6789">
-<br><br>
-<button onclick="taoPhong()">Xuất link</button>
+  <div id="links"></div>
+</div>
 
-<div id="result" style="margin-top:15px;"></div>
+<!-- CHAT -->
+<div id="chat" class="chat">
+  <h2 id="title">Phòng</h2>
 </div>
 
 </div>
 
 <script>
-function taoPhong(){
-  let raw = document.getElementById("roomCode").value;
-  let num = raw.replace(/\\D/g,'');
-  if(!num){ alert("Nhập số phòng"); return;}
+function getParam(name){
+  return new URLSearchParams(location.search).get(name);
+}
 
-  let room = "p"+num;
-  let link = location.origin + "/" + room;
+// ADMIN
+if(getParam("admin")==="1"){
+  document.getElementById("admin").style.display="block";
+}
 
-  document.getElementById("result").innerHTML = `
-    <div>${link}</div>
-    <button onclick="copyLink('${link}')">Copy</button>
+// tạo link
+function create(){
+  let r = document.getElementById("room").value;
+  if(!r) return;
+
+  let base = location.origin;
+
+  let html = `
+  <div class="linkbox">Nam: ${base}/?room=${r}&role=male</div>
+  <div class="linkbox">Nữ: ${base}/?room=${r}&role=female</div>
+  <div class="linkbox">CSKH: ${base}/?room=${r}&role=cskh</div>
   `;
+
+  document.getElementById("links").innerHTML = html;
 }
 
-function copyLink(link){
-  navigator.clipboard.writeText(link);
-  alert("Đã copy");
-}
+// CHAT LOAD
+let room = getParam("room");
+let role = getParam("role");
 
-// vào phòng
-const params = new URLSearchParams(location.search);
-const r = params.get("r");
-
-if(r){
-  document.body.innerHTML = "<h2 style='text-align:center;margin-top:100px'>Đã vào phòng "+r+"</h2>";
+if(room){
+  document.getElementById("title").innerText = "Phòng " + room;
 }
 </script>
 
