@@ -4,27 +4,30 @@
 <meta charset="UTF-8">
 <title>Kết Nối Yêu Thương</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <meta property="og:title" content="Kết Nối Yêu Thương">
 <meta property="og:description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật">
 <meta property="og:image" content="https://tuoitrungnien.com/preview.png">
 
 <style>
-body {font-family: Arial; background:#f8f0f2; margin:0;}
-.container {display:flex; padding:20px;}
-.left {width:280px;}
-.box {background:white; border-radius:12px; padding:15px; margin-bottom:15px; border:1px solid #f3b5c3;}
-.main {flex:1; margin-left:20px; background:white; border-radius:12px; padding:20px;}
-.chat {margin-top:20px; border:1px solid #ddd; border-radius:10px; padding:10px; height:300px; overflow:auto;}
-input, button {padding:8px; border-radius:6px; border:1px solid #ccc;}
-button {background:#ff4d79; color:white; border:none;}
+body{font-family:Arial;background:#f8f0f2;margin:0}
+.wrap{display:flex;padding:15px}
+.left{width:260px}
+.box{background:#fff;border:1px solid #f3b5c3;border-radius:12px;padding:12px;margin-bottom:12px}
+.main{flex:1;margin-left:15px;background:#fff;border-radius:12px;padding:15px}
+.chat{height:300px;border:1px solid #ddd;border-radius:10px;overflow:auto;padding:10px}
+input{padding:8px;border:1px solid #ccc;border-radius:6px;width:100%;margin-bottom:8px}
+button{background:#ff4d79;color:#fff;border:none;padding:8px 10px;border-radius:6px}
+.msg{margin:4px 0}
 </style>
 </head>
 
 <body>
 
-<h2 style="padding:15px;">❤️ Kết Nối Yêu Thương</h2>
+<h2 style="padding:10px">❤️ Kết Nối Yêu Thương</h2>
 
-<div class="container">
+<div class="wrap">
 
 <div class="left">
 
@@ -43,19 +46,16 @@ Kết nối chân thành - uy tín - bảo mật
 </div>
 
 <div class="box">
-<b>Hồ sơ người dùng</b><br><br>
-<input placeholder="Tên hiển thị">
+<b>Hồ sơ người dùng</b>
+<input id="name" placeholder="Tên hiển thị">
 </div>
 
 <!-- ADMIN -->
-<div id="adminBox" class="box" style="display:none;">
-<b>Tạo phòng (Admin)</b><br><br>
-
-<input id="roomInput" placeholder="Nhập mã phòng (vd: 6789)" style="width:100%"><br><br>
-
+<div id="adminBox" class="box" style="display:none">
+<b>Tạo phòng</b>
+<input id="roomInput" placeholder="VD: 6789">
 <button onclick="createRoom()">Xuất 3 link</button>
-
-<div id="linkResult" style="margin-top:10px;"></div>
+<div id="result"></div>
 </div>
 
 </div>
@@ -63,76 +63,79 @@ Kết nối chân thành - uy tín - bảo mật
 <div class="main">
 
 <h3>Không gian trò chuyện riêng tư</h3>
-<p id="status">Vui lòng sử dụng link mời</p>
+<p id="status">Vui lòng dùng link mời</p>
 
-<div id="chatBox" class="chat"></div>
+<div id="chat" class="chat"></div>
 
-<input id="msg" placeholder="Nhập tin nhắn..." style="width:80%">
-<button onclick="send()">Gửi</button>
-
-</div>
+<input id="msg" placeholder="Nhập tin nhắn">
+<button onclick="sendMsg()">Gửi</button>
 
 </div>
 
-<!-- FIREBASE -->
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// 🔥 DÁN CONFIG CỦA BẠN Ở ĐÂY
+/* ====== DÁN CONFIG CỦA BẠN ====== */
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
+  apiKey: "YOUR_API_KEY",
   authDomain: "YOUR_DOMAIN",
-  databaseURL: "YOUR_DB",
-  projectId: "YOUR_ID",
+  databaseURL: "YOUR_DB_URL",
+  projectId: "YOUR_PROJECT_ID"
 };
+/* ================================= */
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// PARAM
-function getParam(name){
-  return new URLSearchParams(location.search).get(name);
-}
+// param
+function p(n){return new URLSearchParams(location.search).get(n)}
 
-// ADMIN
-if(getParam("admin")=="1"){
+// bật admin
+if(p("admin")=="1"){
   document.getElementById("adminBox").style.display="block";
 }
 
-// ROOM
-let room = getParam("room");
-let role = getParam("role");
+// room
+let room = p("room");
+let chatRef;
 
 if(room){
-  document.getElementById("status").innerText = "Phòng " + room;
-  var chatRef = ref(db, "rooms/"+room);
+  document.getElementById("status").innerText="Phòng "+room;
+  chatRef = ref(db,"rooms/"+room);
 
-  onChildAdded(chatRef, (data)=>{
-    let box = document.getElementById("chatBox");
-    box.innerHTML += "<div>"+data.val().msg+"</div>";
+  onChildAdded(chatRef,(data)=>{
+    let m=data.val();
+    document.getElementById("chat").innerHTML +=
+      `<div class="msg"><b>${m.name||"Khách"}:</b> ${m.text}</div>`;
   });
-
-  window.send = function(){
-    let msg = document.getElementById("msg").value;
-    if(!msg) return;
-    push(chatRef, {msg: msg});
-    document.getElementById("msg").value="";
-  }
 }
 
-// CREATE ROOM
+// gửi tin
+window.sendMsg = function(){
+  if(!chatRef) return;
+  let text=document.getElementById("msg").value;
+  if(!text) return;
+  let name=document.getElementById("name").value || "Khách";
+
+  push(chatRef,{name:name,text:text});
+  document.getElementById("msg").value="";
+}
+
+// tạo phòng
 window.createRoom = function(){
-  let code = document.getElementById("roomInput").value.trim();
+  let code=document.getElementById("roomInput").value.trim();
   if(!code) return alert("Nhập mã phòng");
 
-  let base = location.origin;
+  let base=location.origin;
 
-  let male = base + "/?room=" + code + "&role=male";
-  let female = base + "/?room=" + code + "&role=female";
-  let cskh = base + "/?room=" + code + "&role=cskh";
+  let male=base+`/?room=${code}&role=male`;
+  let female=base+`/?room=${code}&role=female`;
+  let cskh=base+`/?room=${code}&role=cskh`;
 
-  document.getElementById("linkResult").innerHTML = `
+  document.getElementById("result").innerHTML=`
   Nam:<br>${male}<br><br>
   Nữ:<br>${female}<br><br>
   CSKH:<br>${cskh}<br><br>
