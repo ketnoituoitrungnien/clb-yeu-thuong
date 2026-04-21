@@ -253,11 +253,13 @@
     }
 
     .messages {
-      background: #fffefe;
+      background: linear-gradient(180deg, #fffefe 0%, #fff8fb 100%);
       height: 430px;
       overflow-y: auto;
       padding: 18px;
       scroll-behavior: smooth;
+      border-top: 1px solid #f6dfe7;
+      border-bottom: 1px solid #f6dfe7;
     }
 
     .empty {
@@ -303,8 +305,9 @@
       background: var(--gray);
       border-radius: 18px;
       padding: 12px 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      box-shadow: 0 6px 14px rgba(198,40,90,0.06);
       line-height: 1.55;
+      border: 1px solid #f0dde4;
     }
 
     .msg-row.me .bubble {
@@ -404,7 +407,7 @@
 
     .composer {
       border-top: 1px solid var(--line);
-      background: #fff;
+      background: linear-gradient(180deg, #fff 0%, #fff8fb 100%);
       padding: 14px;
       display: grid;
       grid-template-columns: 1fr 120px 95px;
@@ -728,7 +731,7 @@
   <header>
     <div class="brand">
       <img
-        src="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/logo-clb.png"
+        src="https://tuoitrungnien.com/logo-clb.png"
         onerror="this.onerror=null;this.src='./logo-clb.png';"
         alt="Logo CLB"
       >
@@ -741,7 +744,7 @@
   </header>
 
   <img
-    src="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/banner-clb.png"
+    src="https://tuoitrungnien.com/banner-clb.png"
     onerror="this.onerror=null;this.src='./banner-clb.png';"
     alt="Banner CLB"
     class="banner"
@@ -771,7 +774,7 @@
         <div class="profile-box">
           <img
             id="myAvatarPreview"
-            src="https://ketnoituoitrungnien.github.io/clb-yeu-thuong/logo-clb.png"
+            src="https://tuoitrungnien.com/logo-clb.png"
             onerror="this.onerror=null;this.src='./logo-clb.png';"
             alt="Ảnh đại diện"
           >
@@ -789,8 +792,7 @@
         </div>
 
         <div class="role-box hide" id="roleBox"></div>
-        <div class="small-note" id="roleNote">
-        </div>
+        <div class="small-note" id="roleNote"></div>
 
         <button class="support-btn hide" id="openSupportBtn">Cần hỗ trợ CSKH</button>
 
@@ -829,17 +831,28 @@
         <div class="chat-top">
           <div>
             <h2 id="roomTitle">Không gian trò chuyện riêng tư</h2>
-            <p id="roomText">Vui lòng sử dụng link mời do CLB gửi để vào phòng riêng</p>
+            <p id="roomText">Phòng trò chuyện riêng tư • an toàn • bảo mật</p>
           </div>
           <div class="chat-meta">
-            <div class="status" id="statusLine">Trang chính thức của CLB</div>
+            <div class="status" id="statusLine">Sẵn sàng kết nối</div>
             <div class="online-count" id="onlineCount"></div>
           </div>
         </div>
 
         <div class="typing-line" id="typingLine"></div>
 
-        <div class="messages" id="messages"></div>
+        <div class="messages" id="messages">
+          <div class="msg-row">
+            <div class="msg-inner">
+              <img class="msg-avatar" src="https://tuoitrungnien.com/logo-clb.png" alt="avatar">
+              <div class="bubble">
+                <div class="msg-name">Kết Nối Yêu Thương</div>
+                <div class="msg-text">Chào mừng bạn đến không gian trò chuyện riêng tư.</div>
+                <div class="msg-time">Bảo mật • Riêng tư</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div class="preview-box" id="imagePreviewBox">
           <img id="imagePreview" src="" alt="Ảnh xem trước">
@@ -847,7 +860,7 @@
           <button type="button" id="removeImageBtn">Bỏ ảnh</button>
         </div>
 
-        <div class="composer hide" id="mainComposer">
+        <div class="composer" id="mainComposer">
           <textarea id="msg" placeholder="Nhập tin nhắn..."></textarea>
           <div class="upload-wrap">
             <span class="upload-label">Gửi hình ảnh</span>
@@ -878,6 +891,19 @@
     <div class="notice-title" id="noticeTitle">Tin nhắn mới</div>
     <div class="notice-text" id="noticeText"></div>
   </div>
+
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("admin") === "1") {
+        window.addEventListener("DOMContentLoaded", function () {
+          var box = document.getElementById("adminBox");
+          if (box) box.style.display = "block";
+        });
+      }
+    })();
+  </script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
