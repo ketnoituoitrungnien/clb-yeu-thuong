@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<script>
-(function(){
-  var p=location.pathname.replace(/^\/+|\/+$/g,"");
-  if(p){
-    location.replace("/?room="+p+"&role=female");
-  }else{
-    location.replace("/");
-  }
-})();
-</script>
+  <meta charset="UTF-8">
+  <script>
+    (function () {
+      var path = location.pathname.replace(/^\/+|\/+$/g, "");
+      if (path) {
+        location.replace("/?room=" + encodeURIComponent(path) + "&role=female");
+      } else {
+        location.replace("/");
+      }
+    })();
+  </script>
 </head>
 <body></body>
 </html>
