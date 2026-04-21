@@ -905,6 +905,69 @@
     })();
   </script>
 
+
+  <script>
+    (function () {
+      function buildInviteLink(room, roleName) {
+        return window.location.origin + "/?room=" + encodeURIComponent(room) + "&role=" + roleName;
+      }
+
+      function sanitizeRoomCode(raw) {
+        return String(raw || "").trim().replace(/[^a-zA-Z0-9_-]/g, "");
+      }
+
+      async function copyText(text) {
+        try {
+          await navigator.clipboard.writeText(text);
+          alert("Đã copy link");
+        } catch (e) {
+          prompt("Copy link này:", text);
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const isAdmin = params.get("admin") === "1";
+
+        const adminBox = document.getElementById("adminBox");
+        const adminRoomCode = document.getElementById("adminRoomCode");
+        const createLinksBtn = document.getElementById("createLinksBtn");
+        const adminLinksBox = document.getElementById("adminLinksBox");
+        const maleLinkText = document.getElementById("maleLinkText");
+        const femaleLinkText = document.getElementById("femaleLinkText");
+        const cskhLinkText = document.getElementById("cskhLinkText");
+
+        if (!adminBox || !adminRoomCode || !createLinksBtn || !adminLinksBox) return;
+
+        if (isAdmin) {
+          adminBox.style.display = "block";
+        }
+
+        createLinksBtn.onclick = function () {
+          const room = sanitizeRoomCode(adminRoomCode.value);
+          if (!room) {
+            alert("Vui lòng nhập mã phòng");
+            adminRoomCode.focus();
+            return;
+          }
+
+          maleLinkText.textContent = buildInviteLink(room, "male");
+          femaleLinkText.textContent = buildInviteLink(room, "female");
+          cskhLinkText.textContent = buildInviteLink(room, "cskh");
+          adminLinksBox.style.display = "flex";
+        };
+
+        document.querySelectorAll("[data-copy-target]").forEach(function (btn) {
+          btn.onclick = function () {
+            const targetId = btn.getAttribute("data-copy-target");
+            const value = document.getElementById(targetId)?.textContent || "";
+            if (value) copyText(value);
+          };
+        });
+      });
+    })();
+  </script>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
     import {
