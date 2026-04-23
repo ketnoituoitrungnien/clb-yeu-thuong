@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <script>
-    (function () {
-      var path = location.pathname.replace(/^\/+|\/+$/g, "");
-      if (!path) { location.replace("/"); return; }
-      var m = path.match(/^(.+)-([mfc])$/i);
-      if (!m) { location.replace("/"); return; }
-      var roleMap = { m: "male", f: "female", c: "cskh" };
-      var room = decodeURIComponent(m[1]);
-      var role = roleMap[m[2].toLowerCase()] || "female";
-      location.replace("/?room=" + encodeURIComponent(room) + "&role=" + role);
-    })();
-  </script>
+<meta charset="UTF-8">
+<script>
+(function () {
+  var path = location.pathname.replace(/^\/+|\/+$/g, "");
+  if (!path) {
+    location.replace("/");
+    return;
+  }
+
+  var m = path.match(/^(.+)-([mfc])$/i);
+  if (!m) {
+    location.replace("/");
+    return;
+  }
+
+  var roleMap = { m: "male", f: "female", c: "cskh" };
+  var room = decodeURIComponent(m[1]);
+  var role = roleMap[m[2].toLowerCase()] || "female";
+
+  location.replace("/?room=" + room + "&role=" + role);
+})();
+</script>
 </head>
 <body></body>
 </html>

@@ -432,6 +432,17 @@
     if (!isValidLink) {
       window.sendMain = function () {};
       window.sendSupport = function () {};
+      messagesEl.innerHTML = `
+        <div class="msg-row">
+          <div class="msg-inner">
+            <img class="msg-avatar" src="https://tuoitrungnien.com/logo-clb.png" alt="avatar">
+            <div class="bubble">
+              <div class="msg-name">Kết Nối Yêu Thương</div>
+              <div class="msg-text">Trang chính thức của CLB.</div>
+              <div class="msg-time">Riêng tư • Bảo mật</div>
+            </div>
+          </div>
+        </div>`;
       return;
     }
 
@@ -460,7 +471,7 @@
     if (role === "male") {
       roleBox.className = "role-box role-male";
       roleBox.textContent = "Vai trò: Bạn nam";
-      roleNote.innerHTML = '<span class="note-green">Phòng riêng chỉ có nam và nữ. CSKH ở phòng hỗ trợ riêng.</span>';
+      roleNote.innerHTML = '<span class="note-green">Bạn đang ở phòng riêng 2 người. Khi cần hỗ trợ, bấm nút CSKH để mở phòng hỗ trợ 3 người.</span>';
       roomTitle.innerText = "Phòng riêng tư 2 người";
       roomText.innerText = "Riêng tư • Tin tưởng • Không có CSKH trong phòng chính";
       statusLine.innerText = "Phòng riêng";
@@ -468,7 +479,7 @@
     } else if (role === "female") {
       roleBox.className = "role-box role-female";
       roleBox.textContent = "Vai trò: Bạn nữ";
-      roleNote.innerHTML = '<span class="note-green">Phòng riêng chỉ có nam và nữ. CSKH ở phòng hỗ trợ riêng.</span>';
+      roleNote.innerHTML = '<span class="note-green">Bạn đang ở phòng riêng 2 người. Khi cần hỗ trợ, bấm nút CSKH để mở phòng hỗ trợ 3 người.</span>';
       roomTitle.innerText = "Phòng riêng tư 2 người";
       roomText.innerText = "Riêng tư • Tin tưởng • Không có CSKH trong phòng chính";
       statusLine.innerText = "Phòng riêng";
@@ -648,7 +659,7 @@
         scrollBottom(messagesEl);
       });
     } else {
-      mainComposer.classList.add("hide");
+      mainComposer.style.display = "none";
       messagesEl.innerHTML = `
         <div class="msg-row">
           <div class="msg-inner">
