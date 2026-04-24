@@ -1,95 +1,770 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kết Nối Yêu Thương</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kết Nối Yêu Thương</title>
 
-<meta property="og:title" content="Kết Nối Yêu Thương">
-<meta property="og:description" content="Phòng riêng tư - bấm 1 lần là vào chat">
-<meta property="og:image" content="https://tuoitrungnien.com/preview.png">
+  <meta property="og:title" content="Kết Nối Yêu Thương" />
+  <meta property="og:description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật" />
+  <meta property="og:image" content="https://tuoitrungnien.com/preview.png" />
+  <meta property="og:url" content="https://tuoitrungnien.com/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kết Nối Yêu Thương" />
+  <meta name="twitter:description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật" />
+  <meta name="twitter:image" content="https://tuoitrungnien.com/preview.png" />
 
-<style>
-body{font-family:Arial;background:#fff8fa;margin:0}
-.wrap{display:flex;gap:20px;padding:20px}
-.left{width:320px}
-.card{background:#fff;border:1px solid #f0d0da;border-radius:15px;padding:15px;margin-bottom:15px}
-button{background:#c6285a;color:#fff;border:none;padding:10px 15px;border-radius:10px;cursor:pointer}
-.chat{flex:1;background:#fff;border-radius:15px;border:1px solid #f0d0da;padding:15px}
-#messages{height:300px;overflow:auto;border:1px solid #eee;margin-bottom:10px;padding:10px}
-input{width:100%;padding:10px;border-radius:10px;border:1px solid #ccc}
-</style>
+  <style>
+    * { box-sizing: border-box; }
+    :root{
+      --bg:#fff8fa; --card:#fff; --line:#efd7df; --pink:#c6285a; --pink2:#8f1747;
+      --soft:#ffd8e5; --text:#443b3f; --muted:#7a6f73; --green:#0f9d58;
+      --gold:#fff4dc; --goldline:#f1d28b; --goldtext:#92400e;
+      --blue:#dbeafe; --blueText:#1d4ed8; --female:#ffe4ec; --femaleText:#be185d;
+      --gray:#f6f7fb;
+    }
+    body{
+      margin:0;font-family:Arial,sans-serif;color:var(--text);
+      background:linear-gradient(180deg,var(--bg),#fffdfc);
+    }
+    header{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      padding:14px 18px;background:#fff;border-bottom:1px solid var(--line);
+      position:sticky;top:0;z-index:20;
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand img{width:58px;height:58px;border-radius:50%;object-fit:cover;border:2px solid #f4c7d7;background:#fff}
+    .brand h1{margin:0;color:var(--pink);font-size:24px;line-height:1.15}
+    .brand p{margin:4px 0 0;color:var(--muted);font-size:14px}
+    .header-room{color:var(--pink2);font-weight:bold;font-size:15px;text-align:right}
+    .banner{width:100%;height:180px;object-fit:cover;display:block;background:#f9e9ef;border-bottom:1px solid #edd3dc}
+
+    .wrap{display:grid;grid-template-columns:320px 1fr;gap:18px;padding:18px;align-items:start}
+    .card{
+      background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:16px;
+      box-shadow:0 8px 20px rgba(195,74,122,.05);
+    }
+    .card h3{margin:0 0 12px;color:#b61f4d;font-size:22px}
+    .card p,.card li,.card label{font-size:15px;line-height:1.7}
+    .card ul{margin:0;padding-left:20px}
+    .small-note{font-size:13px;color:#8a7f84;line-height:1.5}
+    .profile-box{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+    .profile-box img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #f3c6d5;background:#fff}
+    input,textarea,button{font:inherit}
+    input,textarea{
+      width:100%;padding:12px 14px;border:1px solid #dbc8cf;border-radius:12px;background:#fff;outline:none;
+    }
+    textarea{min-height:54px;resize:none}
+    .name-editor{margin-top:10px}
+    .role-box{display:none;margin-top:12px;padding:10px 12px;border-radius:12px;font-size:14px;font-weight:bold}
+    .role-male{display:block;background:var(--blue);color:var(--blueText)}
+    .role-female{display:block;background:var(--female);color:var(--femaleText)}
+    .role-cskh{display:block;background:var(--gold);color:var(--goldtext);border:1px solid var(--goldline)}
+
+    .btn,.small-btn{
+      border:none;border-radius:12px;background:linear-gradient(135deg,var(--pink),var(--pink2));
+      color:#fff;font-weight:bold;cursor:pointer;
+    }
+    .btn{height:50px;padding:0 14px}
+    .small-btn{height:38px;padding:0 12px;border-radius:10px}
+
+    .admin-box{
+      display:none;margin-top:12px;padding:12px;background:#fff8fb;border:1px dashed #e8b8c8;border-radius:14px;
+    }
+    .admin-title{color:#b61f4d;font-weight:bold;margin-bottom:8px;font-size:16px}
+    .admin-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:10px}
+    .admin-links{display:none;gap:10px;flex-direction:column}
+    .admin-link-item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px}
+    .admin-link-item strong{display:block;margin-bottom:6px;color:#8f1747;font-size:14px}
+    .admin-link-text{font-size:13px;line-height:1.5;color:#5d5558;word-break:break-all;margin-bottom:8px}
+
+    .help-btn{width:100%;margin-top:10px;display:none}
+
+    .chat-card{
+      background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+      box-shadow:0 8px 20px rgba(195,74,122,.05);
+    }
+    .chat-top{
+      background:linear-gradient(90deg,#fff7fa,#fff1f5);border-bottom:1px solid var(--line);
+      padding:16px 18px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+    }
+    .chat-top h2{margin:0;color:#b61f4d;font-size:28px}
+    .chat-top p{margin:6px 0 0;color:var(--muted);font-size:14px}
+    .chat-meta{text-align:right}
+    .status{color:var(--green);font-weight:bold;font-size:14px}
+    .online-count{color:#5a5557;font-size:13px;margin-top:6px}
+    .typing-line{min-height:20px;padding:8px 18px 0;font-size:13px;color:var(--pink2);font-style:italic}
+    .messages{
+      background:linear-gradient(180deg,#fffefe,#fff8fb);
+      height:430px;overflow-y:auto;padding:18px;scroll-behavior:smooth;
+      border-top:1px solid #f6dfe7;border-bottom:1px solid #f6dfe7;
+    }
+    .msg-row{display:flex;margin-bottom:16px}
+    .msg-row.me{justify-content:flex-end}
+    .msg-inner{display:flex;gap:10px;max-width:82%;align-items:flex-start}
+    .msg-row.me .msg-inner{flex-direction:row-reverse}
+    .msg-avatar{
+      width:42px;height:42px;min-width:42px;border-radius:50%;object-fit:cover;
+      border:2px solid #f0d0da;background:#fff
+    }
+    .bubble{
+      background:var(--gray);border-radius:18px;padding:12px 14px;border:1px solid #f0dde4;
+      box-shadow:0 6px 14px rgba(198,40,90,.06);line-height:1.55;
+    }
+    .msg-row.me .bubble{background:var(--soft)}
+    .support-row .bubble{background:var(--gold);border:1px solid var(--goldline)}
+    .msg-name{font-weight:bold;color:#4f1231;font-size:14px;margin-bottom:4px}
+    .badge{
+      display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;
+      font-size:11px;font-weight:bold;vertical-align:middle;
+    }
+    .badge-male{background:var(--blue);color:var(--blueText)}
+    .badge-female{background:var(--female);color:var(--femaleText)}
+    .badge-cskh{background:var(--gold);color:var(--goldtext);border:1px solid var(--goldline)}
+    .msg-text{font-size:15px;white-space:pre-wrap;word-break:break-word}
+    .msg-time{margin-top:6px;font-size:12px;color:#8a7e83}
+    .msg-image{
+      margin-top:8px;max-width:240px;width:100%;border-radius:12px;display:block;border:1px solid #ead7de;
+    }
+    .preview-box{
+      margin:10px 14px 0;display:none;align-items:center;gap:10px;background:#fff7fa;
+      border:1px solid var(--line);border-radius:12px;padding:10px;
+    }
+    .preview-box img{width:60px;height:60px;object-fit:cover;border-radius:10px;border:1px solid #ead6dd}
+    .composer{
+      border-top:1px solid var(--line);background:linear-gradient(180deg,#fff,#fff8fb);
+      padding:14px;display:grid;grid-template-columns:1fr 120px 95px;gap:10px;align-items:center;
+    }
+    .upload-wrap{
+      display:flex;align-items:center;justify-content:center;height:50px;border:1px solid #dbc8cf;
+      border-radius:12px;background:#fff;position:relative;overflow:hidden;
+    }
+    .upload-wrap input{position:absolute;inset:0;opacity:0;cursor:pointer}
+    .upload-label{font-size:14px;color:#7a6f73;text-align:center;padding:0 8px}
+
+    .support-panel{
+      display:none;position:fixed;right:18px;bottom:18px;width:360px;max-width:calc(100vw - 24px);
+      height:520px;background:#fff;border:1px solid var(--line);border-radius:18px;
+      box-shadow:0 16px 40px rgba(0,0,0,.12);overflow:hidden;z-index:60;
+    }
+    .support-panel.show{display:flex;flex-direction:column}
+    .support-head{
+      padding:14px 16px;background:#fff8ef;border-bottom:1px solid #f1dfb3;
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    .support-head strong{color:#8f1747;font-size:16px}
+    .support-messages{flex:1;overflow-y:auto;padding:14px;background:#fffefc;scroll-behavior:smooth}
+    .support-composer{
+      padding:12px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 95px;gap:8px;background:#fff;
+    }
+
+    @media (max-width:980px){
+      .wrap{grid-template-columns:1fr}
+      .right{order:1}.left{order:2}
+      .messages{height:340px}
+      .composer{grid-template-columns:1fr}
+      .msg-inner{max-width:94%}
+      .banner{height:130px}
+      .chat-top{flex-direction:column;align-items:flex-start}
+      .chat-meta{text-align:left}
+      .chat-top h2{font-size:24px}
+      .card h3{font-size:18px}
+      .brand img{width:52px;height:52px}
+      .brand h1{font-size:20px}
+      .brand p{font-size:13px}
+      .header-room{font-size:13px}
+      .support-panel{right:8px;left:8px;bottom:8px;width:auto;height:70vh}
+      .admin-row{grid-template-columns:1fr}
+    }
+  </style>
 </head>
-
 <body>
+  <header>
+    <div class="brand">
+      <img src="https://tuoitrungnien.com/logo-clb.png" alt="Logo CLB">
+      <div class="brand-text">
+        <h1>Kết Nối Yêu Thương</h1>
+        <p>Tuổi Trung Niên · Chân thành · Uy tín · Bảo mật</p>
+      </div>
+    </div>
+    <div class="header-room" id="headerRoom">Chào mừng bạn đến CLB</div>
+  </header>
 
-<div class="wrap">
+  <img src="https://tuoitrungnien.com/banner-clb.png" alt="Banner CLB" class="banner">
 
-<div class="left">
-<div class="card">
-<h3>Tạo phòng</h3>
-<input id="room" placeholder="Nhập mã phòng">
-<button onclick="create()">Xuất 3 link</button>
+  <div class="wrap">
+    <div class="left">
+      <div class="card">
+        <h3>Giới thiệu CLB</h3>
+        <p><strong>Kết Nối Yêu Thương – Tuổi Trung Niên</strong> là không gian kết nối dành cho những người mong muốn một mối quan hệ nghiêm túc, bình yên, chân thành và có sự tôn trọng lẫn nhau.</p>
+      </div>
 
-<div id="links" style="margin-top:10px"></div>
-</div>
-</div>
+      <div class="card">
+        <h3>Cam kết</h3>
+        <ul>
+          <li>Chân thành trong kết nối</li>
+          <li>Uy tín trong hỗ trợ</li>
+          <li>Bảo mật thông tin cá nhân</li>
+          <li>Hạn chế spam và làm phiền</li>
+          <li>CLB có thể hỗ trợ khi cần</li>
+        </ul>
+      </div>
 
-<div class="chat">
-<div id="messages"></div>
-<input id="msg" placeholder="Nhập tin...">
-<button onclick="send()">Gửi</button>
-</div>
+      <div class="card">
+        <h3>Hồ sơ người dùng</h3>
+        <div class="profile-box">
+          <img id="myAvatarPreview" src="https://tuoitrungnien.com/logo-clb.png" alt="Ảnh đại diện">
+          <div>
+            <label for="avatarInput"><strong>Đổi ảnh đại diện</strong></label>
+            <div class="small-note">Bấm chọn ảnh từ máy hoặc điện thoại của bạn.</div>
+          </div>
+        </div>
 
-</div>
+        <input type="file" id="avatarInput" accept="image/*">
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+        <div class="name-editor">
+          <label for="profileName"><strong>Tên hiển thị</strong></label>
+          <input id="profileName" placeholder="Ví dụ: Ngọc Lan">
+        </div>
 
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBzEsfKawGbZnRStNWK_qUjCMbZ7DJde80",
-  authDomain: "tinh-yeu-trung-nien.firebaseapp.com",
-  projectId: "tinh-yeu-trung-nien"
-};
+        <div class="role-box" id="roleBox"></div>
+        <div class="small-note" id="roleNote"></div>
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+        <button class="btn help-btn" id="openSupportBtn" type="button">Cần hỗ trợ CSKH</button>
 
-const url = new URLSearchParams(location.search);
-const room = url.get("room");
+        <div class="admin-box" id="adminBox">
+          <div class="admin-title">Tạo phòng nhanh</div>
+          <div class="admin-row">
+            <input id="adminRoomCode" type="text" placeholder="Nhập mã phòng, ví dụ 6789">
+            <button class="btn" id="createLinksBtn" type="button">Xuất 3 link</button>
+          </div>
+          <div class="admin-links" id="adminLinksBox">
+            <div class="admin-link-item">
+              <strong>Link hội viên nam</strong>
+              <div class="admin-link-text" id="maleLinkText"></div>
+              <button class="small-btn" data-copy-target="maleLinkText" type="button">Copy link nam</button>
+            </div>
+            <div class="admin-link-item">
+              <strong>Link hội viên nữ</strong>
+              <div class="admin-link-text" id="femaleLinkText"></div>
+              <button class="small-btn" data-copy-target="femaleLinkText" type="button">Copy link nữ</button>
+            </div>
+            <div class="admin-link-item">
+              <strong>Link CSKH</strong>
+              <div class="admin-link-text" id="cskhLinkText"></div>
+              <button class="small-btn" data-copy-target="cskhLinkText" type="button">Copy link CSKH</button>
+            </div>
+          </div>
+          <div class="small-note">Dùng trực tiếp 3 link này. Không cần link ngắn.</div>
+        </div>
+      </div>
+    </div>
 
-if(room){
-  const ref = db.collection("rooms").doc(room).collection("msg");
+    <div class="right">
+      <div class="chat-card">
+        <div class="chat-top">
+          <div>
+            <h2 id="roomTitle">Không gian trò chuyện riêng tư</h2>
+            <p id="roomText">Phòng trò chuyện riêng tư • an toàn • bảo mật</p>
+          </div>
+          <div class="chat-meta">
+            <div class="status" id="statusLine">Sẵn sàng kết nối</div>
+            <div class="online-count" id="onlineCount"></div>
+          </div>
+        </div>
 
-  ref.orderBy("time").onSnapshot(s=>{
-    let html="";
-    s.forEach(d=>{
-      html += "<div>"+d.data().text+"</div>";
+        <div class="typing-line" id="typingLine"></div>
+        <div class="messages" id="messages"></div>
+
+        <div class="preview-box" id="imagePreviewBox">
+          <img id="imagePreview" src="" alt="Ảnh xem trước">
+          <div style="flex:1;font-size:14px;color:#7a6f73;">Ảnh sẽ được gửi cùng tin nhắn.</div>
+          <button type="button" id="removeImageBtn">Bỏ ảnh</button>
+        </div>
+
+        <div class="composer" id="mainComposer">
+          <textarea id="msg" placeholder="Nhập tin nhắn..."></textarea>
+          <div class="upload-wrap">
+            <span class="upload-label">Gửi hình ảnh</span>
+            <input type="file" id="messageImageInput" accept="image/*">
+          </div>
+          <button class="btn" onclick="sendMain()">Gửi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="support-panel" id="supportPanel">
+    <div class="support-head">
+      <strong id="supportTitle">Phòng hỗ trợ CSKH</strong>
+      <button class="btn" id="closeSupportBtn" type="button" style="height:40px">Đóng</button>
+    </div>
+    <div class="typing-line" id="supportTypingLine"></div>
+    <div class="support-messages" id="supportMessages"></div>
+    <div class="support-composer">
+      <textarea id="supportMsg" placeholder="Nhập nội dung cần hỗ trợ..."></textarea>
+      <button class="btn" onclick="sendSupport()">Gửi</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      function buildInviteLink(room, roleName) {
+        return window.location.origin + "/?room=" + encodeURIComponent(room) + "&role=" + roleName;
+      }
+      function sanitizeRoomCode(raw) {
+        return String(raw || "").trim().replace(/[^a-zA-Z0-9_-]/g, "");
+      }
+      async function copyText(text) {
+        try { await navigator.clipboard.writeText(text); alert("Đã copy link"); }
+        catch (e) { prompt("Copy link này:", text); }
+      }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const isAdmin = params.get("admin") === "1";
+        const adminBox = document.getElementById("adminBox");
+        const adminRoomCode = document.getElementById("adminRoomCode");
+        const createLinksBtn = document.getElementById("createLinksBtn");
+        const adminLinksBox = document.getElementById("adminLinksBox");
+        const maleLinkText = document.getElementById("maleLinkText");
+        const femaleLinkText = document.getElementById("femaleLinkText");
+        const cskhLinkText = document.getElementById("cskhLinkText");
+
+        if (!adminBox || !adminRoomCode || !createLinksBtn || !adminLinksBox) return;
+        if (isAdmin) adminBox.style.display = "block";
+
+        createLinksBtn.onclick = function () {
+          const room = sanitizeRoomCode(adminRoomCode.value);
+          if (!room) { alert("Vui lòng nhập mã phòng"); adminRoomCode.focus(); return; }
+          maleLinkText.textContent = buildInviteLink(room, "male");
+          femaleLinkText.textContent = buildInviteLink(room, "female");
+          cskhLinkText.textContent = buildInviteLink(room, "cskh");
+          adminLinksBox.style.display = "flex";
+        };
+
+        document.querySelectorAll("[data-copy-target]").forEach(function (btn) {
+          btn.onclick = function () {
+            const targetId = btn.getAttribute("data-copy-target");
+            const value = document.getElementById(targetId)?.textContent || "";
+            if (value) copyText(value);
+          };
+        });
+      });
+    })();
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+    import { getFirestore, collection, doc, addDoc, setDoc, onSnapshot, serverTimestamp, query, orderBy, deleteDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+
+    const params = new URLSearchParams(location.search);
+    const roomId = (params.get("room") || "").trim();
+    const role = (params.get("role") || "").trim().toLowerCase();
+    const isValidLink = !!roomId && ["male","female","cskh"].includes(role);
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBzEsfKawGbZnRStNWK_qUjCMbZ7DJde80",
+      authDomain: "tinh-yeu-trung-nien.firebaseapp.com",
+      projectId: "tinh-yeu-trung-nien",
+      storageBucket: "tinh-yeu-trung-nien.firebasestorage.app",
+      messagingSenderId: "671083426912",
+      appId: "1:671083426912:web:e1cfe940075e87402a3f05"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const headerRoom = document.getElementById("headerRoom");
+    const roomTitle = document.getElementById("roomTitle");
+    const roomText = document.getElementById("roomText");
+    const statusLine = document.getElementById("statusLine");
+    const onlineCount = document.getElementById("onlineCount");
+    const typingLine = document.getElementById("typingLine");
+    const profileName = document.getElementById("profileName");
+    const msgInput = document.getElementById("msg");
+    const messagesEl = document.getElementById("messages");
+    const avatarInput = document.getElementById("avatarInput");
+    const myAvatarPreview = document.getElementById("myAvatarPreview");
+    const messageImageInput = document.getElementById("messageImageInput");
+    const imagePreviewBox = document.getElementById("imagePreviewBox");
+    const imagePreview = document.getElementById("imagePreview");
+    const removeImageBtn = document.getElementById("removeImageBtn");
+    const roleBox = document.getElementById("roleBox");
+    const roleNote = document.getElementById("roleNote");
+    const mainComposer = document.getElementById("mainComposer");
+    const supportPanel = document.getElementById("supportPanel");
+    const openSupportBtn = document.getElementById("openSupportBtn");
+    const closeSupportBtn = document.getElementById("closeSupportBtn");
+    const supportMessages = document.getElementById("supportMessages");
+    const supportMsg = document.getElementById("supportMsg");
+    const supportTypingLine = document.getElementById("supportTypingLine");
+    const supportTitle = document.getElementById("supportTitle");
+
+    function roleLabel(r) {
+      if (r === "male") return "Bạn nam";
+      if (r === "female") return "Bạn nữ";
+      if (r === "cskh") return "CSKH CLB";
+      return "Người dùng";
+    }
+    function roleBadgeClass(r) {
+      if (r === "male") return "badge-male";
+      if (r === "female") return "badge-female";
+      if (r === "cskh") return "badge-cskh";
+      return "badge-female";
+    }
+    function formatTime(ts) {
+      if (!ts) return "Đang gửi...";
+      const d = ts.toDate();
+      return d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
+    }
+    function esc(text) {
+      const div = document.createElement("div");
+      div.textContent = text || "";
+      return div.innerHTML;
+    }
+    function scrollBottom(el, force=false) {
+      const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 120;
+      if (force || nearBottom) el.scrollTop = el.scrollHeight;
+    }
+
+    avatarInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function () { myAvatarPreview.src = reader.result; };
+      reader.readAsDataURL(file);
     });
-    document.getElementById("messages").innerHTML = html;
-  });
 
-  window.send = function(){
-    const text = document.getElementById("msg").value;
-    if(!text) return;
-    ref.add({text:text,time:Date.now()});
-    document.getElementById("msg").value="";
-  }
-}else{
-  document.querySelector(".chat").style.display="none";
-}
+    if (!isValidLink) {
+      mainComposer.style.display = "none";
+      messagesEl.innerHTML = `
+        <div class="msg-row">
+          <div class="msg-inner">
+            <img class="msg-avatar" src="https://tuoitrungnien.com/logo-clb.png" alt="avatar">
+            <div class="bubble">
+              <div class="msg-name">Kết Nối Yêu Thương</div>
+              <div class="msg-text">Trang chính thức của CLB.</div>
+              <div class="msg-time">Riêng tư • Bảo mật</div>
+            </div>
+          </div>
+        </div>`;
+      window.sendMain = function(){};
+      window.sendSupport = function(){};
+      throw new Error("home");
+    }
 
-function create(){
-  const r = document.getElementById("room").value;
-  const base = location.origin;
-  document.getElementById("links").innerHTML = `
-  Nam: ${base}/?room=${r}&role=male<br>
-  Nữ: ${base}/?room=${r}&role=female<br>
-  CSKH: ${base}/?room=${r}&role=cskh
-  `;
-}
-</script>
+    const storageKeyName = "clb_chat_name_" + roomId + "_" + role;
+    const storageKeyAvatar = "clb_chat_avatar_" + roomId + "_" + role;
+    const storageKeySession = "clb_chat_session_" + roomId + "_" + role;
+    const savedName = localStorage.getItem(storageKeyName) || "";
+    profileName.value = savedName;
 
+    let myAvatar = localStorage.getItem(storageKeyAvatar) || "https://tuoitrungnien.com/logo-clb.png";
+    myAvatarPreview.src = myAvatar;
+    let pendingMessageImage = "";
+    let typingTimer = null;
+    let supportTypingTimer = null;
+    const sessionId = localStorage.getItem(storageKeySession) || ("s_" + Math.random().toString(36).slice(2));
+    localStorage.setItem(storageKeySession, sessionId);
+    const isMainUser = role === "male" || role === "female";
+
+    headerRoom.innerText = "Room: " + roomId;
+    roleBox.style.display = "block";
+    mainComposer.style.display = isMainUser ? "grid" : "none";
+
+    if (role === "male") {
+      roleBox.className = "role-box role-male";
+      roleBox.textContent = "Vai trò: Bạn nam";
+      roleNote.innerHTML = 'Bạn đang ở phòng riêng 2 người. Bấm nút CSKH để mở phòng hỗ trợ 3 người.';
+      roomTitle.innerText = "Phòng riêng tư 2 người";
+      roomText.innerText = "Nam • Nữ";
+      statusLine.innerText = "Phòng riêng";
+      openSupportBtn.style.display = "block";
+    } else if (role === "female") {
+      roleBox.className = "role-box role-female";
+      roleBox.textContent = "Vai trò: Bạn nữ";
+      roleNote.innerHTML = 'Bạn đang ở phòng riêng 2 người. Bấm nút CSKH để mở phòng hỗ trợ 3 người.';
+      roomTitle.innerText = "Phòng riêng tư 2 người";
+      roomText.innerText = "Nam • Nữ";
+      statusLine.innerText = "Phòng riêng";
+      openSupportBtn.style.display = "block";
+    } else {
+      roleBox.className = "role-box role-cskh";
+      roleBox.textContent = "Vai trò: CSKH CLB";
+      roleNote.innerHTML = 'Bạn đang ở phòng hỗ trợ 3 người. CSKH không vào phòng riêng 2 người.';
+      roomTitle.innerText = "Phòng hỗ trợ 3 người";
+      roomText.innerText = "Nam • Nữ • CSKH";
+      statusLine.innerText = "Hỗ trợ trực tuyến";
+      supportPanel.classList.add("show");
+      supportTitle.innerText = "Phòng hỗ trợ hội viên";
+    }
+
+    const privateRoomId = roomId;
+    const supportRoomId = roomId;
+
+    const mainMessagesRef = collection(db, "private_rooms", privateRoomId, "messages");
+    const mainPresenceRef = collection(db, "private_rooms", privateRoomId, "presence");
+    const mainTypingRef = collection(db, "private_rooms", privateRoomId, "typing");
+    const myMainPresenceDoc = doc(db, "private_rooms", privateRoomId, "presence", sessionId);
+    const myMainTypingDoc = doc(db, "private_rooms", privateRoomId, "typing", sessionId);
+
+    const supportMessagesRef = collection(db, "support_rooms", supportRoomId, "messages");
+    const supportPresenceRef = collection(db, "support_rooms", supportRoomId, "presence");
+    const supportTypingRef = collection(db, "support_rooms", supportRoomId, "typing");
+    const mySupportPresenceDoc = doc(db, "support_rooms", supportRoomId, "presence", sessionId);
+    const mySupportTypingDoc = doc(db, "support_rooms", supportRoomId, "typing", sessionId);
+
+    async function updatePresence() {
+      const displayName = profileName.value.trim() || roleLabel(role);
+      try {
+        if (isMainUser) {
+          await setDoc(myMainPresenceDoc, { name: displayName, role, avatar: myAvatar, lastSeen: Date.now() }, { merge:true });
+        }
+        await setDoc(mySupportPresenceDoc, { name: displayName, role, avatar: myAvatar, lastSeen: Date.now() }, { merge:true });
+      } catch(e) {}
+    }
+
+    async function setTypingState(isTyping, supportMode=false) {
+      const displayName = profileName.value.trim() || roleLabel(role);
+      const targetDoc = supportMode ? mySupportTypingDoc : myMainTypingDoc;
+      try {
+        if (isTyping) await setDoc(targetDoc, { name: displayName, role, updatedAt: Date.now() }, { merge:true });
+        else await deleteDoc(targetDoc);
+      } catch(e) {}
+    }
+
+    profileName.addEventListener("change", async () => {
+      localStorage.setItem(storageKeyName, profileName.value.trim());
+      await updatePresence();
+    });
+
+    avatarInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async function () {
+        myAvatar = reader.result;
+        localStorage.setItem(storageKeyAvatar, myAvatar);
+        myAvatarPreview.src = myAvatar;
+        await updatePresence();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    messageImageInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function () {
+        pendingMessageImage = reader.result;
+        imagePreview.src = pendingMessageImage;
+        imagePreviewBox.style.display = "flex";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    removeImageBtn.addEventListener("click", () => {
+      pendingMessageImage = "";
+      messageImageInput.value = "";
+      imagePreview.src = "";
+      imagePreviewBox.style.display = "none";
+    });
+
+    if (isMainUser) {
+      onSnapshot(query(mainMessagesRef, orderBy("createdAt")), (snap) => {
+        messagesEl.innerHTML = "";
+        if (snap.empty) {
+          messagesEl.innerHTML = `
+            <div class="msg-row">
+              <div class="msg-inner">
+                <img class="msg-avatar" src="https://tuoitrungnien.com/logo-clb.png" alt="avatar">
+                <div class="bubble">
+                  <div class="msg-name">Kết Nối Yêu Thương</div>
+                  <div class="msg-text">Phòng riêng 2 người đã sẵn sàng. Hai hội viên có thể nhắn tin qua lại tại đây.</div>
+                  <div class="msg-time">Nam • Nữ</div>
+                </div>
+              </div>
+            </div>`;
+          return;
+        }
+        const myName = profileName.value.trim();
+        snap.forEach((docSnap) => {
+          const d = docSnap.data();
+          if (d.role === "cskh") return;
+          const row = document.createElement("div");
+          const isMe = d.sessionId === sessionId || (myName && d.name === myName && d.avatar === myAvatar);
+          row.className = "msg-row" + (isMe ? " me" : "");
+          row.innerHTML = `
+            <div class="msg-inner">
+              <img class="msg-avatar" src="${esc(d.avatar || "https://tuoitrungnien.com/logo-clb.png")}" alt="avatar">
+              <div class="bubble">
+                <div class="msg-name">
+                  ${esc(d.name || "Ẩn danh")}
+                  <span class="badge ${roleBadgeClass(d.role || "female")}">${roleLabel(d.role || "female")}</span>
+                </div>
+                <div class="msg-text">${esc(d.text || "")}</div>
+                ${d.image ? `<img class="msg-image" src="${esc(d.image)}" alt="Ảnh gửi lên">` : ""}
+                <div class="msg-time">${formatTime(d.createdAt)}</div>
+              </div>
+            </div>`;
+          messagesEl.appendChild(row);
+        });
+        scrollBottom(messagesEl);
+      });
+
+      onSnapshot(mainPresenceRef, (snap) => {
+        const now = Date.now();
+        let alive = 0;
+        snap.forEach((docSnap) => {
+          const d = docSnap.data();
+          if (d.lastSeen && now - d.lastSeen < 45000) alive++;
+        });
+        onlineCount.textContent = `${alive} người đang online`;
+      });
+
+      msgInput.addEventListener("input", async () => {
+        clearTimeout(typingTimer);
+        await setTypingState(true, false);
+        typingTimer = setTimeout(() => setTypingState(false, false), 1500);
+      });
+
+      onSnapshot(mainTypingRef, (snap) => {
+        const arr = [];
+        const now = Date.now();
+        snap.forEach((docSnap) => {
+          if (docSnap.id === sessionId) return;
+          const d = docSnap.data();
+          if (d.updatedAt && now - d.updatedAt < 3000) arr.push(d.name || "Người kia");
+        });
+        typingLine.textContent = arr.length ? `${arr[0]} đang nhập...` : "";
+      });
+    } else {
+      messagesEl.innerHTML = `
+        <div class="msg-row">
+          <div class="msg-inner">
+            <img class="msg-avatar" src="https://tuoitrungnien.com/logo-clb.png" alt="avatar">
+            <div class="bubble">
+              <div class="msg-name">Kết Nối Yêu Thương</div>
+              <div class="msg-text">CSKH không tham gia phòng riêng 2 người. CSKH chỉ làm việc trong phòng hỗ trợ 3 người.</div>
+              <div class="msg-time">Bảo mật riêng tư</div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    onSnapshot(query(supportMessagesRef, orderBy("createdAt")), (snap) => {
+      supportMessages.innerHTML = "";
+      if (snap.empty) {
+        supportMessages.innerHTML = `
+          <div class="msg-row support-row">
+            <div class="msg-inner">
+              <img class="msg-avatar" src="https://tuoitrungnien.com/logo-clb.png" alt="avatar">
+              <div class="bubble">
+                <div class="msg-name">Kết Nối Yêu Thương <span class="badge badge-cskh">CSKH</span></div>
+                <div class="msg-text">Đây là phòng hỗ trợ 3 người riêng để phổ biến nội quy và xử lý vấn đề khi cần.</div>
+                <div class="msg-time">Nam • Nữ • CSKH</div>
+              </div>
+            </div>
+          </div>`;
+        return;
+      }
+      const myName = profileName.value.trim();
+      snap.forEach((docSnap) => {
+        const d = docSnap.data();
+        const row = document.createElement("div");
+        const isMe = d.sessionId === sessionId || (myName && d.name === myName && d.avatar === myAvatar);
+        row.className = "msg-row" + (isMe ? " me" : "") + " support-row";
+        row.innerHTML = `
+          <div class="msg-inner">
+            <img class="msg-avatar" src="${esc(d.avatar || "https://tuoitrungnien.com/logo-clb.png")}" alt="avatar">
+            <div class="bubble">
+              <div class="msg-name">
+                ${esc(d.name || "Ẩn danh")}
+                <span class="badge ${roleBadgeClass(d.role || "cskh")}">${roleLabel(d.role || "cskh")}</span>
+              </div>
+              <div class="msg-text">${esc(d.text || "")}</div>
+              <div class="msg-time">${formatTime(d.createdAt)}</div>
+            </div>
+          </div>`;
+        supportMessages.appendChild(row);
+      });
+      scrollBottom(supportMessages);
+    });
+
+    supportMsg.addEventListener("input", async () => {
+      clearTimeout(supportTypingTimer);
+      await setTypingState(true, true);
+      supportTypingTimer = setTimeout(() => setTypingState(false, true), 1500);
+    });
+
+    onSnapshot(supportTypingRef, (snap) => {
+      const arr = [];
+      const now = Date.now();
+      snap.forEach((docSnap) => {
+        if (docSnap.id === sessionId) return;
+        const d = docSnap.data();
+        if (d.updatedAt && now - d.updatedAt < 3000) arr.push(d.name || "Ai đó");
+      });
+      supportTypingLine.textContent = arr.length ? `${arr[0]} đang nhập...` : "";
+    });
+
+    openSupportBtn.addEventListener("click", () => {
+      supportPanel.classList.add("show");
+      supportMsg.focus();
+    });
+    closeSupportBtn.addEventListener("click", () => {
+      supportPanel.classList.remove("show");
+    });
+
+    window.sendMain = async () => {
+      const name = profileName.value.trim() || roleLabel(role);
+      const text = msgInput.value.trim();
+      if (!isMainUser) return;
+      if (!text && !pendingMessageImage) return;
+
+      localStorage.setItem(storageKeyName, name);
+      await addDoc(mainMessagesRef, {
+        name, role, text: text || "", image: pendingMessageImage || "",
+        avatar: myAvatar, sessionId, createdAt: serverTimestamp()
+      });
+
+      msgInput.value = "";
+      pendingMessageImage = "";
+      messageImageInput.value = "";
+      imagePreview.src = "";
+      imagePreviewBox.style.display = "none";
+      await setTypingState(false, false);
+      await updatePresence();
+      scrollBottom(messagesEl, true);
+    };
+
+    window.sendSupport = async () => {
+      const name = profileName.value.trim() || roleLabel(role);
+      const text = supportMsg.value.trim();
+      if (!text) return;
+
+      localStorage.setItem(storageKeyName, name);
+      await addDoc(supportMessagesRef, {
+        name, role, text, avatar: myAvatar, sessionId, createdAt: serverTimestamp()
+      });
+
+      supportMsg.value = "";
+      await setTypingState(false, true);
+      await updatePresence();
+      scrollBottom(supportMessages, true);
+    };
+
+    msgInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); window.sendMain(); }
+    });
+    supportMsg.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); window.sendSupport(); }
+    });
+
+    setInterval(() => updatePresence(), 20000);
+    updatePresence();
+  </script>
 </body>
 </html>
