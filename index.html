@@ -226,7 +226,8 @@
 
   <script>
     function buildInviteLink(room, roleName){
-      return window.location.origin + "/?room=" + encodeURIComponent(room) + "&role=" + roleName;
+      const short = roleName==="male" ? "m" : roleName==="female" ? "f" : "c";
+      return window.location.origin + "/" + encodeURIComponent(room) + "-" + short;
     }
     function cleanRoom(raw){return String(raw||"").trim().replace(/[^a-zA-Z0-9_-]/g,"")}
     async function copyText(text){
@@ -255,9 +256,17 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
   <script>
+    function parsePrettyPath(){
+      const p=location.pathname.replace(/^\/+|\/+$/g,"");
+      const m=p.match(/^(.+)-([mfc])$/i);
+      if(!m) return {room:"",role:""};
+      const map={m:"male",f:"female",c:"cskh"};
+      return {room:decodeURIComponent(m[1]),role:map[m[2].toLowerCase()]};
+    }
+    const pretty=parsePrettyPath();
     const params=new URLSearchParams(location.search);
-    const roomId=(params.get("room")||"").trim();
-    const role=(params.get("role")||"").trim().toLowerCase();
+    const roomId=(params.get("room")||pretty.room||"").trim();
+    const role=(params.get("role")||pretty.role||"").trim().toLowerCase();
     const isValid=!!roomId && ["male","female","cskh"].includes(role);
 
     const firebaseConfig={
