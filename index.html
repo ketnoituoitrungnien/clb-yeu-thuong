@@ -227,7 +227,7 @@
   <script>
     function buildInviteLink(room, roleName){
       const short = roleName==="male" ? "m" : roleName==="female" ? "f" : "c";
-      return window.location.origin + "/#" + encodeURIComponent(room) + "-" + short;
+      return window.location.origin + "/" + encodeURIComponent(room) + "-" + short;
     }
     function cleanRoom(raw){return String(raw||"").trim().replace(/[^a-zA-Z0-9_-]/g,"")}
     async function copyText(text){
@@ -257,10 +257,12 @@
 
   <script>
     function parsePrettyPath(){
-      let p = "";
-      if(location.hash && location.hash.length>1){
-        p = location.hash.replace(/^#/, "");
-      }else{
+      const p = location.pathname.replace(/^\/+|\/+$/g,"");
+      const m = p.match(/^(.+)-([mfc])$/i);
+      if(!m) return {room:"",role:""};
+      const map={m:"male",f:"female",c:"cskh"};
+      return {room:decodeURIComponent(m[1]),role:map[m[2].toLowerCase()]};
+    }else{
         p = location.pathname.replace(/^\/+|\/+$/g,"");
       }
       const m=p.match(/^(.+)-([mfc])$/i);
