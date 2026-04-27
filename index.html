@@ -8,6 +8,7 @@
   <meta property="og:title" content="Kết Nối Yêu Thương">
   <meta property="og:description" content="Phòng trò chuyện riêng tư - an toàn - bảo mật">
   <meta property="og:image" content="https://tuoitrungnien.com/preview.png">
+  <meta property="og:image:secure_url" content="https://tuoitrungnien.com/preview.png">
   <meta property="og:url" content="https://tuoitrungnien.com/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -256,24 +257,9 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
   <script>
-    function parsePrettyPath(){
-      const p = location.pathname.replace(/^\/+|\/+$/g,"");
-      const m = p.match(/^(.+)-([mfc])$/i);
-      if(!m) return {room:"",role:""};
-      const map={m:"male",f:"female",c:"cskh"};
-      return {room:decodeURIComponent(m[1]),role:map[m[2].toLowerCase()]};
-    }else{
-        p = location.pathname.replace(/^\/+|\/+$/g,"");
-      }
-      const m=p.match(/^(.+)-([mfc])$/i);
-      if(!m) return {room:"",role:""};
-      const map={m:"male",f:"female",c:"cskh"};
-      return {room:decodeURIComponent(m[1]),role:map[m[2].toLowerCase()]};
-    }
-    const pretty=parsePrettyPath();
     const params=new URLSearchParams(location.search);
-    const roomId=(params.get("room")||pretty.room||"").trim();
-    const role=(params.get("role")||pretty.role||"").trim().toLowerCase();
+    const roomId=(params.get("room")||"").trim();
+    const role=(params.get("role")||"").trim().toLowerCase();
     const isValid=!!roomId && ["male","female","cskh"].includes(role);
 
     const firebaseConfig={
