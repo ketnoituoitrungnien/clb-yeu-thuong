@@ -935,7 +935,7 @@ footer{background:var(--text);color:#fff;padding:50px 20px 22px}
               <th>Ghi chú bản thân</th>
               <th>Ngày gửi</th>
               <th>Trạng thái</th>
-              <th>Thao tác</th>
+              <th>Ghi chú CSKH</th><th>Thao tác</th>
             </tr>
           </thead>
           <tbody id="regTbody"></tbody>
@@ -1117,7 +1117,7 @@ function renderTable(){
       '<td style="font-size:11.5px;max-width:140px;color:var(--muted)">'+escHTML(r.bio||'—')+'</td>'+
       '<td style="font-size:11px;color:var(--muted);white-space:nowrap">'+escHTML(r.date)+'</td>'+
       '<td>'+sBadge+'</td>'+
-      '<td style="white-space:nowrap"><button class="done-btn" onclick="markDone('+r.id+')">✓ Đã kết nối</button> <button class="del-btn" onclick="deleteReg('+r.id+')">🗑</button></td>'+
+      '<td style="min-width:160px"><div style="font-size:11.5px;color:var(--bur);margin-bottom:4px">'+(r.cskhNote||'')+'</div><input type="text" placeholder="Nhập ghi chú..." value="'+(r.cskhNote||'')+'" onchange="saveNote('+r.id+',this.value)" style="width:100%;padding:5px 8px;border:1px solid #e0c8d0;border-radius:6px;font-size:11.5px"/></td>'+'<td style="white-space:nowrap"><button class="done-btn" onclick="markDone('+r.id+')">✓ Đã kết nối</button> <button class="del-btn" onclick="deleteReg('+r.id+')">🗑</button></td>'+
     '</tr>'
   }).join('')
 }
@@ -1135,6 +1135,16 @@ function markDone(id){
   saveRegs(regs)
   renderTable()
 }
+function saveNote(id, note){
+  var regs = getRegs()
+  var reg = regs.find(function(r){ return r.id === id })
+  if(reg){
+    reg.cskhNote = note
+    localStorage.setItem('regs', JSON.stringify(regs))
+    renderTable()
+  }
+}
+
 
 function deleteReg(id){
   if(!confirm('Xóa đơn đăng ký này?')) return
